@@ -9,12 +9,26 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_perfil"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:title="@string/perfil" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_inmuebles"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:title="@string/inmuebles" />
+        <item
+            android:id="@+id/nav_inquilinos"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/inquilinos" />
+        <item
+            android:id="@+id/nav_contratos"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/contratos" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/logout" />
+
+
     </group>
 </menu>

@@ -10,4 +10,18 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Bienvenido "</string>
+    <string name="invalid_username">Username invalido</string>
+    <string name="invalid_password">Password debe tener mas de 2 caracteres</string>
+    <string name="login_failed">"Login incorrecto"</string>
+    <string name="perfil">Perfil</string>
+    <string name="inmuebles">Inmuebles</string>
+    <string name="inquilinos">Inquilinos</string>
+    <string name="contratos">Contratos</string>
+    <string name="logout">Logout</string>
 </resources>

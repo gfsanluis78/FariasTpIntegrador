@@ -1,8 +1,9 @@
 package com.farias.fariastpintegrador.modelo;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Propietario {
+public class Propietario implements Serializable {
 
     private int id;
     private Long dni;
