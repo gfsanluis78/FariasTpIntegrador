@@ -1,23 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="8dp"
+    android:background="#91BABF">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.perfil.PerfilFragment">
 
+
+    <ImageView
+        android:paddingBottom="20dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:tooltipText="foto"
+        />
+
     <TextView
-        android:id="@+id/text_pefil"
+        android:id="@+id/TV_titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:text="Perfil"
         android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="40sp"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        />
+    <TextView
+        android:id="@+id/TV_codigo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Codigo"
+        android:paddingLeft="20dp"
+        android:paddingBottom="20dp"
+        android:textSize="15sp"
+        />
+    <EditText
+        android:id="@+id/ET_codigoNumero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Codigo"
+        android:paddingLeft="20dp"
+        android:textSize="25sp"
+        android:paddingBottom="20dp"
+        />
+    <TextView
+        android:id="@+id/TV_dni"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="DNI"
+        android:paddingLeft="20dp"
+        android:paddingBottom="20dp"
+        android:textSize="15sp"
+        />
+    <EditText
+        android:id="@+id/ET_dni"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="DNI"
+        android:paddingLeft="20dp"
+        android:textSize="25sp"
+        android:paddingBottom="20dp"
+        />
+    <TextView
+        android:id="@+id/TV_nombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre"
+        android:paddingLeft="20dp"
+        android:paddingBottom="20dp"
+        android:textSize="15sp"
+        />
+    <EditText
+        android:id="@+id/ET_nombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre"
+        android:paddingLeft="20dp"
+        android:textSize="25sp"
+        android:paddingBottom="20dp"
+        />
+    <TextView
+        android:id="@+id/TV_apellido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Apellido"
+        android:paddingLeft="20dp"
+        android:paddingBottom="20dp"
+        android:textSize="15sp"
+        />
+    <EditText
+        android:id="@+id/ET_apellido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Apellido"
+        android:paddingLeft="20dp"
+        android:textSize="25sp"
+        android:paddingBottom="20dp"
+        />
+    <TextView
+        android:id="@+id/TV_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:paddingLeft="20dp"
+        android:paddingBottom="20dp"
+        android:textSize="15sp"
+        />
+    <EditText
+        android:id="@+id/ET_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:paddingLeft="20dp"
+        android:textSize="25sp"
+        android:paddingBottom="20dp"
+        />
+    <TextView
+        android:id="@+id/TV_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña"
+        android:paddingLeft="20dp"
+        android:paddingBottom="20dp"
+        android:textSize="15sp"
+        />
+    <EditText
+        android:id="@+id/ET_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña"
+        android:paddingLeft="20dp"
+        android:textSize="25sp"
+        android:paddingBottom="20dp"
+        />
+    <TextView
+        android:id="@+id/TV_telefono"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Telefono"
+        android:paddingLeft="20dp"
+        android:paddingBottom="20dp"
+        android:textSize="15sp"
+        />
+    <EditText
+        android:id="@+id/ET_telefono"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Telefono"
+        android:paddingLeft="20dp"
+        android:textSize="25sp"
+        android:paddingBottom="20dp"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="Editar"
+        android:textSize="30sp"
+        android:background="@drawable/mi_borde_redondo"
+        />
+
+
+</LinearLayout>
+</ScrollView>
