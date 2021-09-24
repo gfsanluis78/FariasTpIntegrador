@@ -7,11 +7,11 @@
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\Genaro\.android\avd\Nexus_6P_API_28.avd" />
+            <value value="C:\Users\Genaro\.android\avd\Galaxy_S8_Emulador_API_29.avd" />
           </Key>
         </deviceKey>
       </Target>
     </targetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2021-09-22T20:14:19.744155700Z" />
+    <timeTargetWasSelectedWithDropDown value="2021-09-23T23:10:19.477169400Z" />
   </component>
 </project>
