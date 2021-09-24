@@ -24,8 +24,6 @@ import com.farias.fariastpintegrador.MainActivity;
 import com.farias.fariastpintegrador.R;
 import com.farias.fariastpintegrador.modelo.Propietario;
 import com.farias.fariastpintegrador.request.ApiClient;
-import com.farias.fariastpintegrador.ui.login.LoginViewModel;
-import com.farias.fariastpintegrador.ui.login.LoginViewModelFactory;
 import com.farias.fariastpintegrador.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -33,12 +31,15 @@ public class LoginActivity extends AppCompatActivity {
     private LoginViewModel loginViewModel;
     private ActivityLoginBinding binding;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
      binding = ActivityLoginBinding.inflate(getLayoutInflater());
      setContentView(binding.getRoot());
+
+
 
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
