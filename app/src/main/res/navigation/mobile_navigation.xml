@@ -35,7 +35,11 @@
         android:id="@+id/nav_inquilino"
         android:name="com.farias.fariastpintegrador.ui.inquilino.InquilinoFragment"
         android:label="Inquilino"
-        tools:layout="@layout/fragment_inquilino" />
+        tools:layout="@layout/fragment_inquilino" >
+        <action
+            android:id="@+id/action_nav_inquilino_to_inquilinoDetalleFragment"
+            app:destination="@id/inquilinoDetalleFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_contrato"
@@ -52,5 +56,10 @@
         android:name="com.farias.fariastpintegrador.ui.inmuebles.InmuebleDetalleFragment"
         android:label="Informacion del inmueble"
         tools:layout="@layout/fragment_inmueble_detalle" />
+    <fragment
+        android:id="@+id/inquilinoDetalleFragment"
+        android:name="com.farias.fariastpintegrador.ui.inquilino.InquilinoDetalleFragment"
+        android:label="Informacion de inquilino"
+        tools:layout="@layout/fragment_inquilino_detalle" />
 
 </navigation>
