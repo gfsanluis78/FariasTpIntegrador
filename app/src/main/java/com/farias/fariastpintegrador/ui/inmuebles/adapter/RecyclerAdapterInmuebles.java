@@ -1,7 +1,6 @@
 package com.farias.fariastpintegrador.ui.inmuebles.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,22 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.farias.fariastpintegrador.R;
 import com.farias.fariastpintegrador.modelo.Inmueble;
-import com.farias.fariastpintegrador.ui.inmuebles.InmuebleDetalleFragment;
-import com.google.android.material.navigation.NavigationView;
-
-import java.net.ContentHandler;
 import java.util.ArrayList;
 
 
+@SuppressWarnings("ALL")
 public class RecyclerAdapterInmuebles extends RecyclerView.Adapter<RecyclerAdapterInmuebles.InmuebleViewHolder> {
 
     // Declaraciones

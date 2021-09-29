@@ -23,8 +23,12 @@
         android:label="Inmueble"
         tools:layout="@layout/fragment_inmueble" >
         <action
-            android:id="@+id/action_nav_inmueble_to_inmuebleDetalleFragment2"
-            app:destination="@id/inmuebleDetalleFragment" />
+            android:id="@+id/action_nav_inmueble_to_inmuebleDetalleFragment"
+            app:destination="@id/inmuebleDetalleFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -45,12 +49,8 @@
         tools:layout="@layout/fragment_logout" />
     <fragment
         android:id="@+id/inmuebleDetalleFragment"
-        android:name="com.farias.fariastpintegrador.InmuebleDetalleFragment"
-        android:label="fragment_inmueble_detalle"
-        tools:layout="@layout/fragment_inmueble_detalle" >
-        <action
-            android:id="@+id/action_inmuebleDetalleFragment2_to_nav_inmueble"
-            app:destination="@id/nav_inmueble" />
-    </fragment>
+        android:name="com.farias.fariastpintegrador.ui.inmuebles.InmuebleDetalleFragment"
+        android:label="Informacion del inmueble"
+        tools:layout="@layout/fragment_inmueble_detalle" />
 
 </navigation>

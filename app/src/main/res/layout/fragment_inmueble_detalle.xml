@@ -7,41 +7,231 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    android:background="#91BABF">
+    android:background="@color/white">
 
 
-    <TextView
-        android:id="@+id/TV_titulo_detalle"
+    <TableLayout
+        android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Detalle del inmueble"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="8dp">
+        android:layout_marginTop="16dp"
+        android:stretchColumns="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    </TextView>
+        <TableRow>
 
-    <TextView
-        android:id="@+id/TV_precio_detalle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Precio del inmueble"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/TV_titulo_detalle"
-        tools:layout_editor_absoluteX="8dp">
+            <TextView
+                android:id="@+id/TV_labelId"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:width="230dp"
+                android:text="Codigo"
+                android:textSize="15sp"
+                tools:layout_editor_absoluteX="8dp">
 
-    </TextView>
+            </TextView>
+
+            <TextView
+                android:id="@+id/TV_labelAmbientes"
+                android:layout_marginTop="10dp"
+                android:text="Ambientes"
+                android:textSize="15sp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="8dp">
+
+            </TextView>
+
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/TV_IdDetalle"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="3dip"
+                android:text="Id del inmueble"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/TV_labelId"
+                tools:layout_editor_absoluteX="8dp">
+
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/TV_AmbientesDetalle"
+                android:layout_marginTop="10dp"
+                android:padding="3dip"
+                android:text="Ambientes"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/TV_labelAmbientes"
+                tools:layout_editor_absoluteX="8dp">
+
+            </TextView>
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/TV_labelDireccion"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:text="Direccion"
+                android:textSize="15sp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="8dp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/TV_labelPrecio"
+                android:layout_marginTop="30dp"
+                android:text="Precio del inmueble"
+                android:textSize="15sp"
+                app:layout_constraintTop_toBottomOf="@+id/TV_titulo_detalle"
+                tools:layout_editor_absoluteX="8dp">
+
+            </TextView>
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/TV_DireccionDetalle"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="3dip"
+                android:text="Direccion"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="8dp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/TV_precio_detalle"
+                android:layout_marginTop="10dp"
+                android:padding="3dip"
+                android:text="Precio del inmueble"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/TV_titulo_detalle"
+                tools:layout_editor_absoluteX="8dp">
+
+            </TextView>
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/TV_labelUso"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:text="Uso"
+                android:textSize="15sp"
+                tools:layout_editor_absoluteX="8dp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/TV_labelDisponibilidad"
+                android:layout_marginTop="30dp"
+                android:text="Estado"
+                android:textSize="15sp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="8dp">
+
+            </TextView>
+
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/TV_UsoDetalle"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="3dip"
+                android:text="Uso"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/TV_labelId"
+                tools:layout_editor_absoluteX="8dp">
+
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/TV_DisponibilidadDetalle"
+                android:layout_marginTop="10dp"
+                android:padding="3dip"
+                android:text="Disponibilidad"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/TV_labelAmbientes"
+                tools:layout_editor_absoluteX="8dp">
+
+            </TextView>
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/TV_labelTipoDetalle"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:text="Tipo"
+                android:textSize="15sp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="8dp">
+
+            </TextView>
+
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/TV_TipoDetalle"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="3dip"
+                android:text="Tipo del inmueble"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="8dp">
+
+            </TextView>
+
+        </TableRow>
+
+    </TableLayout>
 
     <ImageView
         android:id="@+id/IV_foto_detalle"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_marginBottom="10dp"
         android:src="@drawable/ic_launcher"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
+        app:layout_constraintVertical_bias="1.0"
+        />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

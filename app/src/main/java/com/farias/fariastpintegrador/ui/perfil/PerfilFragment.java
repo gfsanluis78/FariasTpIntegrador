@@ -1,8 +1,14 @@
 package com.farias.fariastpintegrador.ui.perfil;
 
+import static android.widget.Toast.LENGTH_SHORT;
+
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,10 +22,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.farias.fariastpintegrador.MainActivity;
 import com.farias.fariastpintegrador.R;
 import com.farias.fariastpintegrador.databinding.FragmentPerfilBinding;
 import com.farias.fariastpintegrador.modelo.Propietario;
+import com.farias.fariastpintegrador.ui.login.LoginActivity;
 import com.farias.fariastpintegrador.ui.login.LoginViewModel;
 
 
@@ -53,7 +62,7 @@ public class PerfilFragment extends Fragment {
                 Log.i("mensaje", propietario.getNombre() );
 
                 titulo.setText(propietario.getNombre() + " " + propietario.getApellido());
-//                id.setText(propietario.getId());
+                id.setText(propietario.getId()+"");
                 dni.setText(propietario.getDni().toString());
                 nombre.setText(propietario.getNombre());
                 apellido.setText(propietario.getApellido());
@@ -67,7 +76,7 @@ public class PerfilFragment extends Fragment {
         perfilViewModel.getEstadoEditable().observe(getViewLifecycleOwner(), new Observer<Boolean>() {  // observo el boton
             @Override
             public void onChanged(Boolean aBoolean) {
-                // id.setEnabled((aBoolean));
+//                id.setEnabled((aBoolean));
                 dni.setEnabled((aBoolean));
                 nombre.setEnabled((aBoolean));
                 apellido.setEnabled((aBoolean));
@@ -77,10 +86,42 @@ public class PerfilFragment extends Fragment {
            }
         });
 
+        perfilViewModel.getEstadoNoEditable().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                dni.setEnabled((aBoolean));
+                nombre.setEnabled((aBoolean));
+                apellido.setEnabled((aBoolean));
+                email.setEnabled((aBoolean));
+                clave.setEnabled((aBoolean));
+                telefono.setEnabled((aBoolean));
+
+
+                perfilViewModel.obtenerUsuario();
+
+            }
+        });
+
         perfilViewModel.getVisibleEditar().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 editar.setVisibility(integer);
+                editar.setText("Cancelar");
+                editar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        perfilViewModel.cambiarEstadoNoEditable();
+                        editar.setText("Editar");
+                        editar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                perfilViewModel.cambiarEstadoEditable();
+
+                            }
+                        });
+                    }
+                });
             }
         });
 
@@ -99,7 +140,7 @@ public class PerfilFragment extends Fragment {
 
     private void inicializarControles(View view){
         titulo = view.findViewById(R.id.TV_titulo);
-//        id = view.findViewById(R.id.ET_codigoNumero);
+        id = view.findViewById(R.id.ET_Id);
         dni = view.findViewById(R.id.ET_dni);
         nombre = view.findViewById(R.id.ET_nombre);
         apellido = view.findViewById(R.id.ET_apellido);
@@ -112,7 +153,7 @@ public class PerfilFragment extends Fragment {
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                perfilViewModel.cambiarEstado();
+                perfilViewModel.cambiarEstadoEditable();
             }
         });
 
@@ -130,6 +171,17 @@ public class PerfilFragment extends Fragment {
                 p.setTelefono(telefono.getText().toString());
 
                 perfilViewModel.modificarDatos(p);
+                //perfilViewModel.cambiarEstadoNoEditable();
+                editar.setText("Editar");
+                editar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        perfilViewModel.cambiarEstadoEditable();
+                    }
+                });
+
+                Toast.makeText(getContext(),"Datos guardados correctamente", LENGTH_SHORT).show();
+
             }
         });
     }

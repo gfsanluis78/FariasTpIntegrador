@@ -18,6 +18,7 @@ public class PerfilViewModel extends ViewModel {
     private MutableLiveData<Integer> visibleEditar; // accederlos desde la vista
     private MutableLiveData<Integer> visibleGuardar;
     private MutableLiveData<Boolean> estadoEditable;
+    private MutableLiveData<Boolean> estadoNoEditable;
 
     public LiveData<Propietario> getUsuario() {
 
@@ -55,6 +56,14 @@ public class PerfilViewModel extends ViewModel {
         return estadoEditable;
     }
 
+    public MutableLiveData<Boolean> getEstadoNoEditable() {
+        if(estadoNoEditable == null) {
+            estadoNoEditable = new MutableLiveData<>();
+        }
+
+        return estadoNoEditable;
+    }
+
     public void obtenerUsuario() {                  // metodo para recrear al inicio de la vista al usuario actual. Usa el mutable  usuario
         ApiClient api = ApiClient.getApi();
         Propietario p = api.obtenerUsuarioActual();
@@ -64,14 +73,20 @@ public class PerfilViewModel extends ViewModel {
     public void modificarDatos(Propietario p){      // del lado de la activity saco los datos del propietario y los mando a este metodo
         ApiClient api = ApiClient.getApi();         //
         api.actualizarPerfil(p);
-        visibleEditar.setValue((View.VISIBLE));
         visibleGuardar.setValue((View.INVISIBLE));
+        this.cambiarEstadoNoEditable();
     }
 
-    public void cambiarEstado(){                    // Uso el mutable estadoEditable para cambiar los estados de los mutables vedi y v guardar
+    public void cambiarEstadoEditable(){                    // Uso el mutable estadoEditable para cambiar los estados de los mutables vedi y v guardar
         estadoEditable.setValue(true);
         visibleEditar.setValue((View.VISIBLE));
         visibleGuardar.setValue(View.VISIBLE);
+    }
+
+    public void cambiarEstadoNoEditable(){                    // Uso el mutable estadoEditable para cambiar los estados de los mutables vedi y v guardar
+        estadoEditable.setValue(false);
+        visibleEditar.setValue((View.VISIBLE));
+        visibleGuardar.setValue(View.INVISIBLE);
     }
 
 }
