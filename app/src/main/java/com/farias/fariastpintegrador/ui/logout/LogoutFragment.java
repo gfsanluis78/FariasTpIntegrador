@@ -49,11 +49,8 @@ public class LogoutFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-
                 builder.setTitle("Log out");
-
                 builder.setMessage("Seguro desea desloguarse");
-
                 builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

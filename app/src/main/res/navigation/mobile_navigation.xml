@@ -69,6 +69,19 @@
         android:id="@+id/contratoDetalleFragment"
         android:name="com.farias.fariastpintegrador.ui.contrato.ContratoDetalleFragment"
         android:label="Detalles del contrato"
-        tools:layout="@layout/fragment_contrato_detalle"/>
+        tools:layout="@layout/fragment_contrato_detalle">
+        <action
+            android:id="@+id/action_contratoDetalleFragment_to_pagoFragment"
+            app:destination="@id/pagoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pagoFragment"
+        android:name="com.farias.fariastpintegrador.ui.pago.PagoFragment"
+        android:label="Pagos"
+        tools:layout="@layout/fragment_pago" >
+        <action
+            android:id="@+id/action_pagoFragment_to_contratoDetalleFragment"
+            app:destination="@id/contratoDetalleFragment" />
+    </fragment>
 
 </navigation>

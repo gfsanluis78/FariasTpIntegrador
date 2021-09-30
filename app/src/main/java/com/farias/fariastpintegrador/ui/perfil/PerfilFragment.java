@@ -7,6 +7,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -63,7 +65,6 @@ public class PerfilFragment extends Fragment {
 
         this.inicializarControles(root);         // Inicializo la vista
 
-
         perfilViewModel.getUsuario().observe(getViewLifecycleOwner(), propietario ->  {  // De mi nuevo perfilView uso el metodo getUsuario
             {
                 Log.i("mensaje", propietario.getNombre() );
@@ -118,8 +119,26 @@ public class PerfilFragment extends Fragment {
                 editar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Navigation.findNavController(view).navigate(R.id.nav_home);
-
+                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                        builder.setTitle("Cancelar edicion");
+                        builder.setMessage("Seguro desea cancelar y salir de editar perfil?");
+                        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Navigation.findNavController(view).navigate(R.id.nav_home);
+                            }
+                        });
+                        // y si no quiero
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                        //Inicializar el alert dialog
+                        AlertDialog alertDialog = builder.create();
+                        // Mostrar el alert
+                        alertDialog.show();
                     }
                 });
             }

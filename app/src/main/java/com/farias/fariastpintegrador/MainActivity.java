@@ -5,15 +5,12 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.farias.fariastpintegrador.modelo.Propietario;
-import com.farias.fariastpintegrador.request.ApiClient;
 import com.farias.fariastpintegrador.ui.perfil.PerfilViewModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;

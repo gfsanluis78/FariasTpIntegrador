@@ -1,5 +1,6 @@
 package com.farias.fariastpintegrador.ui.contrato;
 
+import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -7,19 +8,23 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.farias.fariastpintegrador.R;
 import com.farias.fariastpintegrador.databinding.FragmentContratoDetalleBinding;
+import com.farias.fariastpintegrador.modelo.Contrato;
 
 public class ContratoDetalleFragment extends Fragment {
 
     private ContratoDetalleViewModel model;
     private FragmentContratoDetalleBinding binding;
+    private Contrato contrato;
 
     public static ContratoDetalleFragment newInstance() {
         return new ContratoDetalleFragment();
@@ -28,6 +33,7 @@ public class ContratoDetalleFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         model = new ViewModelProvider(this).get(ContratoDetalleViewModel.class);
 
         binding = FragmentContratoDetalleBinding.inflate(inflater,container,false);
@@ -43,6 +49,15 @@ public class ContratoDetalleFragment extends Fragment {
             binding.ETInquilinoContrato.setText(contrato.getInquilino().getNombre() + " " + contrato.getInquilino().getApellido());
             binding.ETInmuebleContrato.setText(contrato.getInmueble().getTipo() + " en " + contrato.getInmueble().getDireccion());
 
+            binding.BTContratosPagos.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle result = new Bundle();
+                    result.putSerializable("elContrato", contrato);
+                    //getParentFragmentManager().setFragmentResult("requestKey", result);
+                    Navigation.findNavController(view).navigate(R.id.pagoFragment, result);
+                }
+            });
         });
 
         model.setContratoMutableLiveData(getArguments());
