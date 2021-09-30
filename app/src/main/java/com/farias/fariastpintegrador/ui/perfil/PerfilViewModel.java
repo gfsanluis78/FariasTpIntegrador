@@ -73,6 +73,7 @@ public class PerfilViewModel extends ViewModel {
     public void modificarDatos(Propietario p){      // del lado de la activity saco los datos del propietario y los mando a este metodo
         ApiClient api = ApiClient.getApi();         //
         api.actualizarPerfil(p);
+        //usuario.setValue(p);
         visibleGuardar.setValue((View.INVISIBLE));
         this.cambiarEstadoNoEditable();
     }

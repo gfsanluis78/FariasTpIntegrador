@@ -39,8 +39,6 @@ public class LoginActivity extends AppCompatActivity {
      binding = ActivityLoginBinding.inflate(getLayoutInflater());
      setContentView(binding.getRoot());
 
-
-
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
@@ -81,7 +79,19 @@ public class LoginActivity extends AppCompatActivity {
                 setResult(Activity.RESULT_OK);
 
                 //Complete and destroy login activity once successful
-                finish();
+                //finish();
+                ApiClient api = ApiClient.getApi();
+                Propietario p = api.obtenerUsuarioActual();
+
+
+
+                Intent  MainIntent = new Intent (LoginActivity.this, MainActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("propietario", p);
+                MainIntent.putExtra("propietario", bundle);
+
+                startActivity(MainIntent);
+
             }
         });
 
@@ -127,21 +137,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
+        // initiate successful logged in experience
+        // inicie las actividad
+        // mover lo de la api al viewmodel
+
         String welcome = getString(R.string.welcome) +" " + model.getDisplayName();
-        // TODO : initiate successful logged in experience
-        // TODO : inicie las actividad
-
-        ApiClient api = ApiClient.getApi();
-        Propietario p = api.obtenerUsuarioActual();
-
-
-        Intent  MainIntent = new Intent (LoginActivity.this, MainActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("propietario", p);
-        MainIntent.putExtra("propietario", bundle);
-
-        startActivity(MainIntent);
-
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 

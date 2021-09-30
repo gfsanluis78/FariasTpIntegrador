@@ -7,11 +7,13 @@ public class LoggedInUser {
 
     private String userId;
     private String displayName;
+    private String email;
     private int avatar;
 
-    public LoggedInUser(String userId, String displayName, int avatar) {
+    public LoggedInUser(String userId, String displayName, String email, int avatar) {
         this.userId = userId;
         this.displayName = displayName;
+        this.email = email;
         this.avatar = avatar;
     }
 

@@ -9,6 +9,8 @@ import com.farias.fariastpintegrador.data.LoginRepository;
 import com.farias.fariastpintegrador.data.Result;
 import com.farias.fariastpintegrador.data.model.LoggedInUser;
 import com.farias.fariastpintegrador.R;
+import com.farias.fariastpintegrador.modelo.Propietario;
+import com.farias.fariastpintegrador.request.ApiClient;
 
 public class LoginViewModel extends ViewModel {
 

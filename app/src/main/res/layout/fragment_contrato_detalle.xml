@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:background="@color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.contrato.ContratoDetalleFragment">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/TV_id_contrato"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Codigo contrato"
+            android:paddingLeft="20dp"
+            android:textSize="15sp"
+
+            />
+
+        <TextView
+            android:id="@+id/ET_Id_contrato"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingBottom="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="20dip"/>
+
+        <TextView
+            android:id="@+id/TV_fecha_inicio_contrato"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha inicio"
+            android:paddingLeft="20dp"
+            android:textSize="15sp"
+
+            />
+
+        <TextView
+            android:id="@+id/ET_fecha_inicio_contrato"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingBottom="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="20dip"/>
+
+        <TextView
+            android:id="@+id/TV_fecha_finalizacion_contrato"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha finalizacion"
+            android:paddingLeft="20dp"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/ET_fecha_finalizacion_contrato"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingBottom="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="25dip"/>
+
+        <TextView
+            android:id="@+id/TV_monto_alquiler_contrato"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Monto de alquiler"
+            android:paddingLeft="20dp"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/ET_monto_alquiler_contrato"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingBottom="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="20dip"
+            />
+        <TextView
+            android:id="@+id/TV_inquilino_contrato"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Inquilino"
+            android:paddingLeft="20dp"
+            android:textSize="15sp"
+            />
+        <TextView
+            android:id="@+id/ET_inquilino_contrato"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingBottom="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="20dip"
+            />
+        <TextView
+            android:id="@+id/TV_inmueble_contrato"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Inmueble"
+            android:paddingLeft="20dp"
+            android:textSize="15sp"
+            />
+
+        <TextView
+            android:id="@+id/ET_inmueble_contrato"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingBottom="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="20dip"
+            />
+
+        <Button
+            android:id="@+id/BT_contratos_pagos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pagos" />
+
+
+    </LinearLayout>
+</ScrollView>

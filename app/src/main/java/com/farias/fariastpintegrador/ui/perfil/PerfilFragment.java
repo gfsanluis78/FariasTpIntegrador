@@ -13,6 +13,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.farias.fariastpintegrador.MainActivity;
+import com.farias.fariastpintegrador.MainActivityViewModel;
 import com.farias.fariastpintegrador.R;
+import com.farias.fariastpintegrador.data.LoginRepository;
+import com.farias.fariastpintegrador.data.model.LoggedInUser;
 import com.farias.fariastpintegrador.databinding.FragmentPerfilBinding;
 import com.farias.fariastpintegrador.modelo.Propietario;
 import com.farias.fariastpintegrador.ui.login.LoginActivity;
@@ -35,7 +39,9 @@ import com.farias.fariastpintegrador.ui.login.LoginViewModel;
 public class PerfilFragment extends Fragment {
 
     private PerfilViewModel perfilViewModel;
-    private LoginViewModel loginViewModel;
+
+    private LoggedInUser user;
+    private LoginRepository repository;
 
     private FragmentPerfilBinding binding;
     private EditText id,dni,nombre,apellido,email,clave,telefono;
@@ -96,7 +102,6 @@ public class PerfilFragment extends Fragment {
                 clave.setEnabled((aBoolean));
                 telefono.setEnabled((aBoolean));
 
-
                 perfilViewModel.obtenerUsuario();
 
             }
@@ -110,16 +115,8 @@ public class PerfilFragment extends Fragment {
                 editar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        perfilViewModel.cambiarEstadoNoEditable();
-                        editar.setText("Editar");
-                        editar.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
+                        Navigation.findNavController(view).navigate(R.id.nav_home);
 
-                                perfilViewModel.cambiarEstadoEditable();
-
-                            }
-                        });
                     }
                 });
             }
@@ -129,6 +126,7 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onChanged(Integer integer) {
                 guardar.setVisibility(integer);
+
             }
         });
 
@@ -171,7 +169,10 @@ public class PerfilFragment extends Fragment {
                 p.setTelefono(telefono.getText().toString());
 
                 perfilViewModel.modificarDatos(p);
-                //perfilViewModel.cambiarEstadoNoEditable();
+
+                Navigation.findNavController(view).navigate(R.id.nav_home);
+
+                /*
                 editar.setText("Editar");
                 editar.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -179,14 +180,13 @@ public class PerfilFragment extends Fragment {
                         perfilViewModel.cambiarEstadoEditable();
                     }
                 });
+                */
 
                 Toast.makeText(getContext(),"Datos guardados correctamente", LENGTH_SHORT).show();
 
             }
         });
     }
-
-
 
     @Override
     public void onDestroyView() {
