@@ -8,9 +8,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.farias.fariastpintegrador.modelo.Propietario;
+import com.farias.fariastpintegrador.request.ApiClient;
+import com.farias.fariastpintegrador.ui.perfil.PerfilViewModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -25,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    private MainActivityViewModel mainActivityViewModel;
+    private MainActivityViewModel model;
+    private PerfilViewModel usuario;
+    //Propietario p;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
 
-        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        model = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
         inicializarHeader(navigationView);
 
@@ -64,16 +69,23 @@ public class MainActivity extends AppCompatActivity {
     private void inicializarHeader(NavigationView navigationView) {
 
         View header = navigationView.getHeaderView(0);
-        ImageView h_avatar = header.findViewById(R.id.header_avatar);
-        TextView h_nombre = header.findViewById(R.id.header_title);
-        TextView h_correo = header.findViewById(R.id.header_correo);
 
         Propietario p = (Propietario) getIntent().getBundleExtra("propietario").getSerializable("propietario");
 
-        h_nombre.setText(p.getNombre() + " " + p.getApellido());
-        h_correo.setText(p.getEmail());
-        h_avatar.setImageResource(p.getAvatar());
-    }
+        model.actualizarPerfil(p);
+        model.getPropietario().observe(this, propietario ->  {
+            {
+                ImageView h_avatar = header.findViewById(R.id.header_avatar);
+                TextView h_nombre = header.findViewById(R.id.header_title);
+                TextView h_correo = header.findViewById(R.id.header_correo);
+
+                h_nombre.setText(propietario.getNombre() + " " + propietario.getApellido());
+                h_correo.setText(propietario.getEmail());
+                h_avatar.setImageResource(propietario.getAvatar());
+            }
+        });
+
+   }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

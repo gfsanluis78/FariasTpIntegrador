@@ -10,15 +10,22 @@ import com.farias.fariastpintegrador.modelo.Propietario;
 import com.farias.fariastpintegrador.request.ApiClient;
 
 public class PerfilViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
 
     private MutableLiveData<String> mText;
 
     private MutableLiveData<Propietario> usuario;   // Se declaran los mutables de cada elemento del fragment para poder...
+
     private MutableLiveData<Integer> visibleEditar; // accederlos desde la vista
     private MutableLiveData<Integer> visibleGuardar;
     private MutableLiveData<Boolean> estadoEditable;
     private MutableLiveData<Boolean> estadoNoEditable;
+
+    public PerfilViewModel (){
+        usuario =  new MutableLiveData<>();
+        visibleGuardar =  new MutableLiveData<>();
+        estadoEditable =  new MutableLiveData<>();
+        estadoNoEditable =  new MutableLiveData<>();
+    }
 
     public LiveData<Propietario> getUsuario() {
 
