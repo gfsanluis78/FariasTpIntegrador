@@ -1,6 +1,9 @@
 package com.farias.fariastpintegrador.ui.inmuebles;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,18 +14,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.farias.fariastpintegrador.databinding.FragmentContratoDetalleBinding;
 import com.farias.fariastpintegrador.databinding.FragmentInmuebleDetalleBinding;
+import com.farias.fariastpintegrador.modelo.Contrato;
 
 
 public class InmuebleDetalleFragment extends Fragment {
 
     private InmuebleDetalleViewModel mViewModel;
     private FragmentInmuebleDetalleBinding binding;
+    private Contrato c;
 
     public static InmuebleDetalleFragment newInstance() {
         return new InmuebleDetalleFragment();
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -36,6 +43,14 @@ public class InmuebleDetalleFragment extends Fragment {
 
 
         mViewModel.getInmueble().observe(getViewLifecycleOwner(), inmueble ->  {
+
+                mViewModel.setContrato(inmueble);
+                mViewModel.getContrato().observe(getViewLifecycleOwner(), contrato ->  {
+                   {
+                       c = contrato;
+                    }
+                });
+
                 binding.TVDireccionDetalle.setText(inmueble.getDireccion());
                 binding.TVPrecioDetalle.setText(inmueble.getPrecio()+"");
                 binding.TVIdDetalle.setText(inmueble.getIdInmueble()+"");
@@ -43,6 +58,18 @@ public class InmuebleDetalleFragment extends Fragment {
                 binding.TVUsoDetalle.setText(inmueble.getUso());
                 binding.TVTipoDetalle.setText(inmueble.getTipo());
                 binding.TVDisponibilidadDetalle.setText(inmueble.isEstado()? "Disponible" : "No disponible");
+                binding.TVAlquilado.setText(c == null? "No alquilado" : "Alquilado(n° "+c.getIdContrato()+")" );
+                binding.BTDisponibilidad.setVisibility(c == null? 0 : 4);
+                binding.BTDisponibilidad.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        Log.d("mensaje", "Click en cambiar disponibilidad de " + inmueble.isEstado() );
+                        inmueble.setEstado(inmueble.isEstado() == true? false: true);
+                        Log.d("mensaje", "a disponibilidad " + inmueble.isEstado() );
+                        mViewModel.cambiarDisponiblidad(inmueble);
+                        mViewModel.setInmueble(getArguments());
+                    }
+                });
                 Glide.with(getContext())
                         .load(inmueble.getImagen())
                         .diskCacheStrategy(DiskCacheStrategy.ALL)               // Llama la imagen remota y la carga en el cache,

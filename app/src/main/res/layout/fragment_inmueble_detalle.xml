@@ -27,7 +27,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:width="230dp"
-                android:text="Codigo"
+                android:text="CODIGO"
                 android:textSize="15sp"
                 tools:layout_editor_absoluteX="8dp">
 
@@ -36,7 +36,7 @@
             <TextView
                 android:id="@+id/TV_labelAmbientes"
                 android:layout_marginTop="10dp"
-                android:text="Ambientes"
+                android:text="AMBIENTES"
                 android:textSize="15sp"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="8dp">
@@ -82,7 +82,7 @@
                 android:id="@+id/TV_labelDireccion"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="30dp"
-                android:text="Direccion"
+                android:text="DIRECCION"
                 android:textSize="15sp"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="8dp">
@@ -92,7 +92,7 @@
             <TextView
                 android:id="@+id/TV_labelPrecio"
                 android:layout_marginTop="30dp"
-                android:text="Precio del inmueble"
+                android:text="PRECIO DEL INMUEBLE"
                 android:textSize="15sp"
                 app:layout_constraintTop_toBottomOf="@+id/TV_titulo_detalle"
                 tools:layout_editor_absoluteX="8dp">
@@ -136,7 +136,7 @@
                 android:id="@+id/TV_labelUso"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="30dp"
-                android:text="Uso"
+                android:text="USO"
                 android:textSize="15sp"
                 tools:layout_editor_absoluteX="8dp">
 
@@ -145,7 +145,7 @@
             <TextView
                 android:id="@+id/TV_labelDisponibilidad"
                 android:layout_marginTop="30dp"
-                android:text="Estado"
+                android:text="ESTADO"
                 android:textSize="15sp"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="8dp">
@@ -163,6 +163,7 @@
                 android:layout_marginTop="10dp"
                 android:padding="3dip"
                 android:text="Uso"
+                android:textAllCaps="true"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/TV_labelId"
@@ -191,7 +192,17 @@
                 android:id="@+id/TV_labelTipoDetalle"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="30dp"
-                android:text="Tipo"
+                android:text="TIPO"
+                android:textSize="15sp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="8dp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/TV_labelAlquilado"
+                android:layout_marginTop="30dp"
+                android:text="CONTRATO"
                 android:textSize="15sp"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="8dp">
@@ -207,14 +218,44 @@
                 android:id="@+id/TV_TipoDetalle"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
+                android:capitalize="none"
                 android:padding="3dip"
                 android:text="Tipo del inmueble"
+                android:textAllCaps="true"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="8dp">
 
             </TextView>
+
+            <TextView
+                android:id="@+id/TV_alquilado"
+                android:layout_marginTop="10dp"
+                android:padding="3dip"
+                android:text="Alquilado"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="8dp">
+
+            </TextView>
+
+        </TableRow>
+
+        <TableRow
+            >
+
+            <Button
+                android:id="@+id/BT_Disponibilidad"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_height="70dp"
+                android:text="Cambiar disponibilidad"
+                android:textSize="20sp"
+                android:layout_span="2">
+
+            </Button>
 
         </TableRow>
 
