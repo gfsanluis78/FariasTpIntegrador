@@ -3,7 +3,6 @@ package  com.farias.fariastpintegrador.ui.login;
 import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
@@ -19,18 +18,16 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.farias.fariastpintegrador.MainActivity;
 import com.farias.fariastpintegrador.R;
 import com.farias.fariastpintegrador.modelo.Propietario;
-import com.farias.fariastpintegrador.request.ApiClient;
 import com.farias.fariastpintegrador.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private ActivityLoginBinding binding;
-
+    private  Propietario p;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,15 +72,14 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
+
                 }
                 setResult(Activity.RESULT_OK);
 
-                //Complete and destroy login activity once successful
-                //finish();
-                ApiClient api = ApiClient.getApi();
-                Propietario p = api.obtenerUsuarioActual();
-
-
+                loginViewModel.setPropietario();
+                loginViewModel.getPropietario().observe( LoginActivity.this, propietario -> {
+                    p = propietario;
+                });
 
                 Intent  MainIntent = new Intent (LoginActivity.this, MainActivity.class);
                 Bundle bundle = new Bundle();
@@ -91,7 +87,6 @@ public class LoginActivity extends AppCompatActivity {
                 MainIntent.putExtra("propietario", bundle);
 
                 startActivity(MainIntent);
-
             }
         });
 
@@ -129,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
+                loadingProgressBar.setVisibility(v.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
@@ -139,9 +134,8 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUiWithUser(LoggedInUserView model) {
         // initiate successful logged in experience
         // inicie las actividad
-        // mover lo de la api al viewmodel
 
-        String welcome = getString(R.string.welcome) +" " + model.getDisplayName();
+        String welcome = getString(R.string.welcome) + " " + model.getDisplayName();
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 

@@ -3,6 +3,8 @@ package com.farias.fariastpintegrador.ui.login;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import android.util.Log;
 import android.util.Patterns;
 
 import com.farias.fariastpintegrador.data.LoginRepository;
@@ -16,6 +18,9 @@ public class LoginViewModel extends ViewModel {
 
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
+    private MutableLiveData<Propietario> propietario = new MutableLiveData<>();
+    ApiClient apiClient;
+
     private LoginRepository loginRepository;
 
     LoginViewModel(LoginRepository loginRepository) {
@@ -37,7 +42,6 @@ public class LoginViewModel extends ViewModel {
         if (result instanceof Result.Success) {
             LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
             loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
-            // TODO: Poner aca el intent de la mainactivity
 
         } else {
             loginResult.setValue(new LoginResult(R.string.login_failed));
@@ -69,5 +73,18 @@ public class LoginViewModel extends ViewModel {
     // A placeholder password validation check
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 2;
+    }
+
+    public MutableLiveData<Propietario> getPropietario() {
+        if( propietario == null) {
+            propietario = new MutableLiveData<>();
+        }
+        return propietario;
+    }
+
+    public void setPropietario(){
+        apiClient = ApiClient.getApi();
+        propietario.setValue((apiClient.obtenerUsuarioActual()));
+        Log.d("mensaje viewmodel login", propietario.toString());
     }
 }
