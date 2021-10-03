@@ -24,6 +24,7 @@ import com.farias.fariastpintegrador.data.model.LoggedInUser;
 import com.farias.fariastpintegrador.databinding.FragmentInquilinoFilaBinding;
 import com.farias.fariastpintegrador.databinding.FragmentLogoutBinding;
 import com.farias.fariastpintegrador.databinding.FragmentPerfilBinding;
+import com.farias.fariastpintegrador.ui.login.LoginActivity;
 
 public class LogoutFragment extends Fragment {
 
@@ -54,11 +55,7 @@ public class LogoutFragment extends Fragment {
                 builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        logueado.logout();
-                        startActivity(new Intent(getActivity(), MainActivity.class));
-
-                        //Navigation.findNavController(view).navigate(R.id.login);
-                        //finish();
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
                     }
                 });
                 // y si no quiero

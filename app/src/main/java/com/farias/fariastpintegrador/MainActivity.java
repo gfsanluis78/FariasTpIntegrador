@@ -72,13 +72,15 @@ public class MainActivity extends AppCompatActivity {
         model.actualizarPerfil(p);
         model.getPropietario().observe(this, propietario ->  {
             {
-                ImageView h_avatar = header.findViewById(R.id.header_avatar);
-                TextView h_nombre = header.findViewById(R.id.header_title);
-                TextView h_correo = header.findViewById(R.id.header_correo);
+                if(p != null) {
+                    ImageView h_avatar = header.findViewById(R.id.header_avatar);
+                    TextView h_nombre = header.findViewById(R.id.header_title);
+                    TextView h_correo = header.findViewById(R.id.header_correo);
 
-                h_nombre.setText(propietario.getNombre() + " " + propietario.getApellido());
-                h_correo.setText(propietario.getEmail());
-                h_avatar.setImageResource(propietario.getAvatar());
+                    h_nombre.setText(propietario.getNombre() + " " + propietario.getApellido());
+                    h_correo.setText(propietario.getEmail());
+                    h_avatar.setImageResource(propietario.getAvatar());
+                }
             }
         });
 

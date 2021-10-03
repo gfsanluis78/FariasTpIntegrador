@@ -15,8 +15,6 @@ public class LoginDataSource {
     public Result<LoggedInUser> login(String username, String password) {
 
         try {
-            // TODO: Se agrega un sleep para simular la espera del request
-            Thread.sleep(2000);
             ApiClient api = ApiClient.getApi();
             Propietario esUsuario = api.login(username,password);
             if(esUsuario == null){

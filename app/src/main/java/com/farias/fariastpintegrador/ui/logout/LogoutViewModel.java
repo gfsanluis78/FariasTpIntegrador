@@ -1,12 +1,13 @@
 package com.farias.fariastpintegrador.ui.logout;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class LogoutViewModel extends ViewModel {
-    private MutableLiveData<Boolean> logout;
+import com.farias.fariastpintegrador.modelo.Propietario;
+import com.farias.fariastpintegrador.request.ApiClient;
 
-    public MutableLiveData<Boolean> getLogout() {
-        return logout;
-    }
+public class LogoutViewModel extends ViewModel {
+
 }
