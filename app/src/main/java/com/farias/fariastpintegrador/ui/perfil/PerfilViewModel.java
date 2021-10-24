@@ -1,5 +1,7 @@
 package com.farias.fariastpintegrador.ui.perfil;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.View;
 
 import androidx.lifecycle.LiveData;
@@ -8,6 +10,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.farias.fariastpintegrador.modelo.Propietario;
 import com.farias.fariastpintegrador.request.ApiClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PerfilViewModel extends ViewModel {
 
@@ -19,6 +25,8 @@ public class PerfilViewModel extends ViewModel {
     private MutableLiveData<Integer> visibleGuardar;
     private MutableLiveData<Boolean> estadoEditable;
     private MutableLiveData<Boolean> estadoNoEditable;
+
+    private Context context;
 
     public PerfilViewModel (){
         usuario =  new MutableLiveData<>();
@@ -72,17 +80,41 @@ public class PerfilViewModel extends ViewModel {
     }
 
     public void obtenerUsuario() {                  // metodo para recrear al inicio de la vista al usuario actual. Usa el mutable  usuario
-        ApiClient api = ApiClient.getApi();
-        Propietario p = api.obtenerUsuarioActual();
-        usuario.setValue(p);
+
+        String token = elToken();
+
+        Call<Propietario> callActual = ApiClient.getMyApiClient().obtenerUsuarioActual(token);
+        callActual.enqueue(new Callback<Propietario>() {
+            @Override
+            public void onResponse(Call<Propietario> call, Response<Propietario> response) {
+                usuario.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Propietario> call, Throwable t) {
+
+            }
+        });
+
     }
 
     public void modificarDatos(Propietario p){      // del lado de la activity saco los datos del propietario y los mando a este metodo
-        ApiClient api = ApiClient.getApi();         //
-        api.actualizarPerfil(p);
-        //usuario.setValue(p);
-        visibleGuardar.setValue((View.INVISIBLE));
-        this.cambiarEstadoNoEditable();
+
+        String token = elToken();
+
+        Call<Propietario> callMod = ApiClient.getMyApiClient().actualizarPerfil(token, p);
+        callMod.enqueue(new Callback<Propietario>() {
+            @Override
+            public void onResponse(Call<Propietario> call, Response<Propietario> response) {
+                visibleGuardar.setValue((View.INVISIBLE));
+                PerfilViewModel.this.cambiarEstadoNoEditable();
+            }
+
+            @Override
+            public void onFailure(Call<Propietario> call, Throwable t) {
+
+            }
+        });
     }
 
     public void cambiarEstadoEditable(){                    // Uso el mutable estadoEditable para cambiar los estados de los mutables vedi y v guardar
@@ -95,6 +127,12 @@ public class PerfilViewModel extends ViewModel {
         estadoEditable.setValue(false);
         visibleEditar.setValue((View.VISIBLE));
         visibleGuardar.setValue(View.INVISIBLE);
+    }
+
+    private String elToken(){
+        SharedPreferences sp = context.getSharedPreferences("Usuario",0);
+        String token = sp.getString("token","sin token");
+        return token;
     }
 
 }

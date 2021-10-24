@@ -1,9 +1,38 @@
 package com.farias.fariastpintegrador.request;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.farias.fariastpintegrador.R;
 import com.farias.fariastpintegrador.modelo.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.security.cert.CertificateException;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.PATCH;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 
 public class ApiClient {
@@ -12,9 +41,137 @@ public class ApiClient {
     private ArrayList<Inmueble> inmuebles = new ArrayList<>();
     private ArrayList<Contrato> contratos = new ArrayList<>();
     private ArrayList<Pago> pagos = new ArrayList<>();
+
+    // Con Retrofit
+    // De aca para abajo descomentar y comentar Datos locales
+
+    private static final String URLBASE="https://192.168.1.111:45455/api/";    //le pongo el nombre de Url base que es mas informativa, termina en /
+    private static  PostInterface postInterface;
+
+    private static SharedPreferences sharedPreferences;
+
+    private static SharedPreferences conectar(Context context){
+        if (sharedPreferences==null){
+            sharedPreferences = context.getSharedPreferences("Usuario",0);
+        }
+        return  sharedPreferences;
+    }
+
+    // Construccion del objeto retrofit
+    public static PostInterface getMyApiClient(){
+
+        Gson gson = new GsonBuilder().setLenient().create();
+        Retrofit retrofit=new Retrofit.Builder()
+                .baseUrl(URLBASE)
+                // agrego para confiar
+                .client(getUnsafeOkHttpClient().build())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        postInterface=retrofit.create(PostInterface.class);
+
+        return postInterface;
+    }
+
+    public static OkHttpClient.Builder getUnsafeOkHttpClient() {
+        try {
+            // Create a trust manager that does not validate certificate chains
+            final TrustManager[] trustAllCerts = new TrustManager[]{
+                    new X509TrustManager() {
+                        @Override
+                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                        }
+
+                        @Override
+                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                        }
+
+                        @Override
+                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                            return new java.security.cert.X509Certificate[]{};
+                        }
+                    }
+            };
+
+            // Install the all-trusting trust manager
+            final SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+
+            // Create an ssl socket factory with our all-trusting manager
+            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0]);
+            builder.hostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            });
+            return builder;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // armar la interface
+    public interface  PostInterface{
+
+        @FormUrlEncoded
+        @POST("Propietarios/login")
+        Call<LoginRetrofit> login(@Field("Usuario") String usuario, @Field("Clave") String clave);
+
+        @GET("Propietarios")
+        Call<Propietario> obtenerUsuarioActual(@Header("Authorization") String token);
+
+        // obtnerPropiedades()
+        @GET("Inmuebles")
+        Call<List<Inmueble>> obtnerPropiedades(@Header("Authorization") String token);
+
+        // obtenerPropiedadesAlquiladas()
+        @GET("Inmuebles/Alquilados")
+        Call<List<Inmueble>> obtenerPropiedadesAlquiladas(@Header("Authorizacion")  String token);
+
+        // obtenerContratoVigente(Inmueble inmueble)
+        @GET("Contratos")
+        Call<Contrato> obtenerContratoVigente(@Header("Authorizacion")  String token, @Body Inmueble inmueble);
+
+
+        // obtenerContratosVigentes()
+        @GET("Contratos/Vigentes")
+        Call<List<Contrato>> obtenerContratosVigentes (@Header("Authorizacion") String token);
+
+
+        // obtenerInquilino(Inmueble inmueble)
+        @GET("Inquilinos")
+        Call<Inquilino> obtenerInquilino (@Header("Authorizacion") String token,@Body Inmueble inmueble);
+
+        // obtenerPagos(Contrato contratoVer)
+        @GET("Pagos")
+        Call<List<Pago>> obtenerPagos(@Header("Authorizacion") String token,@Body Contrato contrato);
+
+
+        // actualizarPerfil(Propietario propietario)
+        @PUT("Propietarios")
+        Call<Propietario> actualizarPerfil(@Header("Authorizacion")  String token, @Body Propietario pUpdate);
+
+
+        // actualizarInmueble(Inmueble inmueble)
+        @PATCH("Inmuebles/CambioEstado")
+        Call<Inmueble> actualizarInmueble(@Header("Authorizacion") String token, @Body Inmueble inmueble);
+    }
+
+}
+
+
+
+    // Con datos Locales
+    // De aca para abajo descomentar y comentar retrofit
+    /*
     private static Propietario usuarioActual = null;
     private static ApiClient api = null;
 
+    // Api con valores locales
     private ApiClient() {
         //Nos conectamos a nuestra "Base de Datos"
         cargaDatos();
@@ -40,6 +197,7 @@ public class ApiClient {
             }
         }
         return null;
+
     }
 
 
@@ -161,3 +319,4 @@ public class ApiClient {
 
     }
 }
+*/

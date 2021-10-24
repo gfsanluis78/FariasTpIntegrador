@@ -43,6 +43,8 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
     private LoginViewModel loginViewModel;
     private ActivityLoginBinding binding;
     private  Propietario p;
+    public static Context contextOfApplication;
+
 
     // Shake llamada
     private SensorManager sensorManager;
@@ -56,7 +58,7 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        contextOfApplication = getApplicationContext();
      binding = ActivityLoginBinding.inflate(getLayoutInflater());
      setContentView(binding.getRoot());
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M
@@ -140,7 +142,7 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
+                            passwordEditText.getText().toString(), LoginActivity.getContextOfApplication());
                 }
                 return false;
             }
@@ -155,7 +157,7 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
                     Thread.sleep(2000);
                     Log.d("mensaje", "onClick: loading progress bar");
                     loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
+                            passwordEditText.getText().toString(),LoginActivity.getContextOfApplication());
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -182,7 +184,7 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
         // initiate successful logged in experience
         // inicie las actividad
 
-        loginViewModel.setPropietario();
+        loginViewModel.setPropietario(LoginActivity.getContextOfApplication());
         loginViewModel.getPropietario().observe( LoginActivity.this, propietario -> {
             p = propietario;
         });
@@ -260,4 +262,6 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
         if(isAceelerometerSensorAvailable)
             sensorManager.unregisterListener(this);
     }
+
+    public static Context getContextOfApplication(){ return contextOfApplication; }
 }

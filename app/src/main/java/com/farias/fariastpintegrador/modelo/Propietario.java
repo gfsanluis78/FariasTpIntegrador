@@ -5,33 +5,35 @@ import java.util.Objects;
 
 public class Propietario implements Serializable {
 
-    private int id;
+    private int idPropietario;
     private Long dni;
     private String nombre;
     private String apellido;
     private String email;
-    private String contraseña;
+    private String password;
     private String telefono;
     private int avatar;
+    private String avatarFile;
 
     public Propietario(){}
-    public Propietario(int id, Long dni, String nombre, String apellido, String email, String contraseña, String telefono, int avatar) {
-        this.id = id;
+    public Propietario(int idPropietario, Long dni, String nombre, String apellido, String email, String password, String telefono, int avatar, String avatarFile) {
+        this.idPropietario = idPropietario;
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
-        this.contraseña = contraseña;
+        this.password = password;
         this.telefono = telefono;
         this.avatar=avatar;
+        this.avatarFile=avatarFile;
     }
 
     public int getId() {
-        return id;
+        return idPropietario;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.idPropietario = id;
     }
 
     public Long getDni() {
@@ -67,11 +69,11 @@ public class Propietario implements Serializable {
     }
 
     public String getContraseña() {
-        return contraseña;
+        return password;
     }
 
     public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+        this.password = contraseña;
     }
 
     public String getTelefono() {
@@ -90,16 +92,40 @@ public class Propietario implements Serializable {
         this.avatar = avatar;
     }
 
+//    public int getIdPropietario() {
+//        return idPropietario;
+//    }
+//
+//    public void setIdPropietario(int idPropietario) {
+//        this.idPropietario = idPropietario;
+//    }
+//
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
+
+    public String getAvatarFile() {
+        return avatarFile;
+    }
+
+    public void setAvatarFile(String avatarFile) {
+        this.avatarFile = avatarFile;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Propietario that = (Propietario) o;
-        return id == that.id;
+        return idPropietario == that.idPropietario;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(idPropietario);
     }
 }
