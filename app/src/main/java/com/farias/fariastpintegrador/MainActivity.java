@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
                     h_nombre.setText(propietario.getNombre() + " " + propietario.getApellido());
                     h_correo.setText(propietario.getEmail());
-                    h_avatar.setImageResource(propietario.getAvatar());
+                    h_avatar.setImageResource(R.drawable.juan); // TODO: usar glide
                 }
             }
         });

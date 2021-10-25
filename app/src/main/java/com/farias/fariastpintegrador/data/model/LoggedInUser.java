@@ -26,4 +26,8 @@ public class LoggedInUser {
     }
 
     public int getAvatar() { return avatar; }
+
+    public String getEmail() {
+        return email;
+    }
 }

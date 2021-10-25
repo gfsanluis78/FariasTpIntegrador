@@ -5,20 +5,25 @@ import java.io.Serializable;
 public class Pago implements Serializable {
 
     private int idPago;
-    private int numero;
+    private int numeroPago;
+    private int idContrato;
+    private String fecha;
+    private String importe;
     private Contrato contrato;
-    private double importe;
-    private String fechaDePago;
+
 
     public Pago() {}
 
-    public Pago(int idPago, int numero, Contrato contrato, double importe, String fechaDePago) {
+    public Pago(int idPago, int numeroPago, int idContrato , String fecha, String importe, Contrato contrato) {
         this.idPago = idPago;
-        this.numero = numero;
-        this.contrato = contrato;
+        this.numeroPago = numeroPago;
+        this.idContrato = idContrato;
+        this.fecha = fecha;
         this.importe = importe;
-        this.fechaDePago = fechaDePago;
+        this.contrato = contrato;
     }
+
+
 
     public int getIdPago() {
         return idPago;
@@ -29,11 +34,11 @@ public class Pago implements Serializable {
     }
 
     public int getNumero() {
-        return numero;
+        return numeroPago;
     }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
+    public void setNumero(int numeroPago) {
+        this.numeroPago = numeroPago;
     }
 
     public Contrato getContrato() {
@@ -44,19 +49,35 @@ public class Pago implements Serializable {
         this.contrato = contrato;
     }
 
-    public double getImporte() {
+    public String getImporte() {
         return importe;
     }
 
-    public void setImporte(double importe) {
+    public void setImporte(String importe) {
         this.importe = importe;
     }
 
     public String getFechaDePago() {
-        return fechaDePago;
+        return fecha;
     }
 
     public void setFechaDePago(String fechaDePago) {
-        this.fechaDePago = fechaDePago;
+        this.fecha = fechaDePago;
+    }
+
+    public int getNumeroPago() {
+        return numeroPago;
+    }
+
+    public void setNumeroPago(int numeroPago) {
+        this.numeroPago = numeroPago;
+    }
+
+    public int getIdContrato() {
+        return idContrato;
+    }
+
+    public void setIdContrato(int idContrato) {
+        this.idContrato = idContrato;
     }
 }

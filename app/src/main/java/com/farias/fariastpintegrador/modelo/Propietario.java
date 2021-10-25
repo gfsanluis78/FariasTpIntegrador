@@ -1,22 +1,24 @@
 package com.farias.fariastpintegrador.modelo;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 public class Propietario implements Serializable {
 
     private int idPropietario;
-    private Long dni;
+    private String dni;
     private String nombre;
     private String apellido;
     private String email;
     private String password;
     private String telefono;
-    private int avatar;
+    private String avatar;
     private String avatarFile;
 
     public Propietario(){}
-    public Propietario(int idPropietario, Long dni, String nombre, String apellido, String email, String password, String telefono, int avatar, String avatarFile) {
+    public Propietario(int idPropietario, String dni, String nombre, String apellido, String email, String password, String telefono, String avatar, String avatarFile) {
         this.idPropietario = idPropietario;
         this.dni = dni;
         this.nombre = nombre;
@@ -36,11 +38,11 @@ public class Propietario implements Serializable {
         this.idPropietario = id;
     }
 
-    public Long getDni() {
+    public String getDni() {
         return dni;
     }
 
-    public void setDni(Long dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 
@@ -84,11 +86,11 @@ public class Propietario implements Serializable {
         this.telefono = telefono;
     }
 
-    public int getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(int avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
@@ -127,5 +129,22 @@ public class Propietario implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(idPropietario);
+    }
+
+    public String getNombreCompleto() {
+        return nombre + " " + apellido;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Propietario con id " + idPropietario +
+                " nombre completo " + getNombreCompleto() +
+                " email " + email +
+                " password " + password +
+                " telefono " + telefono +
+                " avatar " + avatar +
+                " avatarFile " + avatarFile +
+                " dni " + dni;
     }
 }

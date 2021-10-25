@@ -2,8 +2,8 @@ package com.farias.fariastpintegrador.request;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
-import com.farias.fariastpintegrador.R;
 import com.farias.fariastpintegrador.modelo.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,7 +32,6 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 
 public class ApiClient {
@@ -57,9 +56,28 @@ public class ApiClient {
         return  sharedPreferences;
     }
 
-    // Construccion del objeto retrofit
-    public static PostInterface getMyApiClient(){
+    public static void guardar(Context context, String token){
 
+        SharedPreferences sharedPreferences = conectar(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("token", "Bearer " + token);
+        Log.d("mensaje/ApiC/guardar", "El token guardado: " + token);
+        editor.commit();
+    }
+
+    public static String leer(Context context, String ubicacion){
+        SharedPreferences sharedPreferences = conectar(context);
+        String token = sharedPreferences.getString("token", "No token");
+        Log.d("mensaje/ApiC/leer/", "El token leido: ok");
+
+
+        return token;
+    }
+
+    // Construccion del objeto retrofit
+    public static PostInterface getMyApiClient(String ubicacion){
+
+        Log.d("mensaje Api", ubicacion);
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit=new Retrofit.Builder()
                 .baseUrl(URLBASE)
@@ -130,35 +148,39 @@ public class ApiClient {
 
         // obtenerPropiedadesAlquiladas()
         @GET("Inmuebles/Alquilados")
-        Call<List<Inmueble>> obtenerPropiedadesAlquiladas(@Header("Authorizacion")  String token);
+        Call<List<Inmueble>> obtenerPropiedadesAlquiladas(@Header("Authorization")  String token);
 
         // obtenerContratoVigente(Inmueble inmueble)
-        @GET("Contratos")
-        Call<Contrato> obtenerContratoVigente(@Header("Authorizacion")  String token, @Body Inmueble inmueble);
+        @POST("Contratos")
+        Call<Contrato> obtenerContratoVigente(@Header("Authorization")  String token, @Body Inmueble inmueble);
 
 
         // obtenerContratosVigentes()
         @GET("Contratos/Vigentes")
-        Call<List<Contrato>> obtenerContratosVigentes (@Header("Authorizacion") String token);
+        Call<List<Contrato>> obtenerContratosVigentes (@Header("Authorization") String token);
 
 
         // obtenerInquilino(Inmueble inmueble)
-        @GET("Inquilinos")
-        Call<Inquilino> obtenerInquilino (@Header("Authorizacion") String token,@Body Inmueble inmueble);
+        @POST("Inquilinos")
+        Call<List<Inquilino>> obtenerInquilino (@Header("Authorization") String token,@Body Inmueble inmueble);
+
+        // obtenerInquilinos()
+        @GET("Inquilino/Todos")
+        Call<List<Inquilino>> obtenerInquilinos (@Header("Authorization") String token);
 
         // obtenerPagos(Contrato contratoVer)
-        @GET("Pagos")
-        Call<List<Pago>> obtenerPagos(@Header("Authorizacion") String token,@Body Contrato contrato);
+        @POST("Pagos")
+        Call<List<Pago>> obtenerPagos(@Header("Authorization") String token,@Body Contrato contrato);
 
 
         // actualizarPerfil(Propietario propietario)
-        @PUT("Propietarios")
-        Call<Propietario> actualizarPerfil(@Header("Authorizacion")  String token, @Body Propietario pUpdate);
+        @PATCH("Propietarios/Editar")
+        Call<Propietario> actualizarPerfil(@Header("Authorization") String token, @Body Propietario propietario);
 
 
         // actualizarInmueble(Inmueble inmueble)
         @PATCH("Inmuebles/CambioEstado")
-        Call<Inmueble> actualizarInmueble(@Header("Authorizacion") String token, @Body Inmueble inmueble);
+        Call<Inmueble> actualizarInmueble(@Header("Authorization") String token, @Body Inmueble inmueble);
     }
 
 }

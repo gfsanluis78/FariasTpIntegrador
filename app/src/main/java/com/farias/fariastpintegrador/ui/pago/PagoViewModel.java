@@ -1,9 +1,14 @@
 package com.farias.fariastpintegrador.ui.pago;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -18,14 +23,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PagoViewModel extends ViewModel {
+public class PagoViewModel extends AndroidViewModel {
 
     MutableLiveData<ArrayList<Pago>> pagos;
     ApiClient apiClient;
     Context context;
 
+
     // Constructor
-    public PagoViewModel(){ this.pagos = new MutableLiveData<>();}
+    public PagoViewModel(@NonNull Application application) {
+        super(application);
+        context = application.getApplicationContext();
+        this.pagos = new MutableLiveData<>();
+    }
+
 
     public MutableLiveData<ArrayList<Pago>> getPagos() {
         return pagos;
@@ -33,19 +44,32 @@ public class PagoViewModel extends ViewModel {
 
     public void setPagos(Contrato contrato) {
 
-        SharedPreferences sp = context.getSharedPreferences("Usuario",0);
-        String token = sp.getString("token","sin token");
+        String token = ApiClient.leer(context, "Pago VM");
+        Log.d("mensanje", "Se buscaran los pagos de " + contrato.toString());
 
-        Call<List<Pago>> callPagos = ApiClient.getMyApiClient().obtenerPagos(token, contrato);
+        Contrato c = new Contrato(){};
+        c.setIdContrato(contrato.getIdContrato());
+
+        Call<List<Pago>> callPagos = ApiClient.getMyApiClient("Pago VM").obtenerPagos(token, c);
         callPagos.enqueue(new Callback<List<Pago>>() {
             @Override
             public void onResponse(Call<List<Pago>> call, Response<List<Pago>> response) {
-                pagos.setValue((ArrayList<Pago>) response.body());
+                if(!response.isSuccessful()){
+                    Log.d("mensanje", "No se pudieron traer los pagos");
+                }
+                else {
+                    Log.d("mensanje", "Se trajeron los pagos");
+                    ArrayList<Pago> list = (ArrayList) response.body();
+                    pagos.setValue(list);
+                    if(list.isEmpty()){
+                        Toast.makeText(context, "No hay pagos para mostrar", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
 
             @Override
             public void onFailure(Call<List<Pago>> call, Throwable t) {
-
+                Log.d("mensaje", "Fallo en pago view model " + t.getMessage());
             }
         });
 

@@ -3,6 +3,7 @@ package com.farias.fariastpintegrador.ui.logout;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,28 +11,23 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.farias.fariastpintegrador.MainActivity;
 import com.farias.fariastpintegrador.R;
-import com.farias.fariastpintegrador.data.LoginDataSource;
-import com.farias.fariastpintegrador.data.model.LoggedInUser;
-import com.farias.fariastpintegrador.databinding.FragmentInquilinoFilaBinding;
 import com.farias.fariastpintegrador.databinding.FragmentLogoutBinding;
-import com.farias.fariastpintegrador.databinding.FragmentPerfilBinding;
+import com.farias.fariastpintegrador.request.ApiClient;
 import com.farias.fariastpintegrador.ui.login.LoginActivity;
 
 public class LogoutFragment extends Fragment {
 
-    private LoginDataSource logueado;
     private LogoutViewModel mViewModel;
     private Button logout;
     private FragmentLogoutBinding binding;
+    private Context context = getContext();
 
     public static LogoutFragment newInstance() {
         return new LogoutFragment();
@@ -55,6 +51,7 @@ public class LogoutFragment extends Fragment {
                 builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        mViewModel.borrarLogin();
                         startActivity(new Intent(getActivity(), LoginActivity.class));
                     }
                 });

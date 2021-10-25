@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.farias.fariastpintegrador.R;
+import com.farias.fariastpintegrador.modelo.Contrato;
 import com.farias.fariastpintegrador.modelo.Inmueble;
 import java.util.ArrayList;
 
@@ -92,7 +93,7 @@ public class RecyclerAdapterInmuebles extends RecyclerView.Adapter<RecyclerAdapt
 
         Inmueble inmueble = lista.get(position);
         holder.TV_Direccion.setText(inmueble.getDireccion());
-        holder.TV_Precio.setText("$ "+inmueble.getPrecio());
+        holder.TV_Precio.setText("$ "+inmueble.getmontoAlquilerPropuesto()+".00");
         Glide.with(context)
                 .load(inmueble.getImagen())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)       // Llama la imagen remota y la carga en el cache,

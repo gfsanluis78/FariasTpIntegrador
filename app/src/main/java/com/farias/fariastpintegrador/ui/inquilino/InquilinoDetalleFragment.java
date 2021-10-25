@@ -34,19 +34,21 @@ public class InquilinoDetalleFragment extends Fragment {
         binding = FragmentInquilinoDetalleBinding.inflate(inflater,container,false);
         View view = binding.getRoot();
 
-        Log.d("mensaje", "El binding inquilino trae ");
 
         model.getInquilino().observe(getViewLifecycleOwner(), inquilino -> {
 
-            binding.ETIdInquilino.setText(inquilino.getIdInquilino()+"");
-            binding.ETNombreInquilino.setText(inquilino.getNombre());
-            binding.ETApellidoInquilino.setText(inquilino.getApellido());
-            binding.ETDniInquilino.setText(inquilino.getDNI()+"");
-            binding.ETEmailInquilino.setText(inquilino.getEmail());
-            binding.ETTelefonoInquilino.setText(inquilino.getTelefono());
-            binding.ETLugarTrabajoInquilino.setText(inquilino.getLugarDeTrabajo());
-            binding.ETGaranteInquilino.setText(inquilino.getNombreGarante());
-            binding.ETTelefonoGarante.setText(inquilino.getTelefonoGarante());
+            Log.d("mensaje", "El  inquilino es " + inquilino.getInquilino().getApellido());
+
+
+            binding.ETIdInquilino.setText(inquilino.getInquilino().getIdInquilino()+"");
+            binding.ETNombreInquilino.setText(inquilino.getInquilino().getNombre());
+            binding.ETApellidoInquilino.setText(inquilino.getInquilino().getApellido());
+            binding.ETDniInquilino.setText(inquilino.getInquilino().getDNI()+"");
+            binding.ETEmailInquilino.setText(inquilino.getInquilino().getEmail());
+            binding.ETTelefonoInquilino.setText(inquilino.getInquilino().getTelefono());
+            binding.ETLugarTrabajoInquilino.setText(inquilino.getGarante().getTrabajo());
+            binding.ETGaranteInquilino.setText(inquilino.getGarante().getNombreCompleto());
+            binding.ETTelefonoGarante.setText(inquilino.getGarante().getTelefono());
         });
 
         model.setInquilino(getArguments());

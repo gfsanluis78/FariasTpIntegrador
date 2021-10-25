@@ -1,8 +1,12 @@
 package com.farias.fariastpintegrador.ui.inmuebles;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.farias.fariastpintegrador.modelo.Inmueble;
@@ -14,15 +18,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InmuebleViewModel extends ViewModel {  // La tarea de esta es traer la lista de inmuebles
+public class InmuebleViewModel extends AndroidViewModel {  // La tarea de esta es traer la lista de inmuebles
 
     MutableLiveData<ArrayList<Inmueble>> inmuebles;     // Lista que inicializo en el constructor
-    ApiClient apiClient;                                // La tarea de traer la a la apiclient y traer la lista esta aca en el viewmodel
     Context context;
 
-    public InmuebleViewModel() {
+    public InmuebleViewModel(@NonNull Application application) {
+        super(application);
         this.inmuebles = new MutableLiveData<>();
+        this.context = application.getApplicationContext();
     }
+
 
     public MutableLiveData<ArrayList<Inmueble>> getInmuebles() {
         return inmuebles;
@@ -31,10 +37,10 @@ public class InmuebleViewModel extends ViewModel {  // La tarea de esta es traer
 
     public void setInmuebles() {
 
-        SharedPreferences sp = context.getSharedPreferences("Usuario",0);
-        String token = sp.getString("token","sin token");
 
-        Call<List<Inmueble>> callInmuebles = ApiClient.getMyApiClient().obtnerPropiedades(token);
+         String token = ApiClient.leer(context, getClass().toString());
+
+        Call<List<Inmueble>> callInmuebles = ApiClient.getMyApiClient("Inmueble VM").obtnerPropiedades(token);
         callInmuebles.enqueue(new Callback<List<Inmueble>>() {
             @Override
             public void onResponse(Call<List<Inmueble>> call, Response<List<Inmueble>> response) {

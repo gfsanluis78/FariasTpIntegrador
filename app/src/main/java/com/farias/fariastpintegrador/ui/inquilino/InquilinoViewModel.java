@@ -1,11 +1,14 @@
 package com.farias.fariastpintegrador.ui.inquilino;
 
+import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
 
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.farias.fariastpintegrador.modelo.Contrato;
 import com.farias.fariastpintegrador.modelo.Inmueble;
@@ -19,39 +22,50 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InquilinoViewModel extends ViewModel {
+public class InquilinoViewModel extends AndroidViewModel {
 
-    MutableLiveData<ArrayList<Inmueble>> inmuebles;     // Lista que inicializo en el constructor
-    MutableLiveData<Inquilino> inquilino;
-    ApiClient apiClient;                                // La tarea de traer la a la apiclient y traer la lista esta aca en el viewmodel
+    MutableLiveData<ArrayList<Contrato>> inmuebles;     // Lista que inicializo en el constructor
+    MutableLiveData<Contrato> inquilino;
     Context context;
 
-    public InquilinoViewModel() {
+    public InquilinoViewModel(@NonNull Application application) {
+        super(application);
+        context = application.getApplicationContext();
         this.inmuebles = new MutableLiveData<>();
     }
 
-    public MutableLiveData<ArrayList<Inmueble>> getInmuebles() {
+
+    public MutableLiveData<ArrayList<Contrato>> getInmuebles() {
         return inmuebles;
     }
 
-    public MutableLiveData<Inquilino> getInquilino() {
+    public MutableLiveData<Contrato> getInquilino() {
         return inquilino;
     }
 
     public void setInmuebles() {
 
         String token = traerToken();
-        Call<List<Inmueble>> callLista = ApiClient.getMyApiClient().obtenerPropiedadesAlquiladas(token);
-        callLista.enqueue(new Callback<List<Inmueble>>() {
+        Call<List<Contrato>> callLista = ApiClient.getMyApiClient("Inquilino VM").obtenerContratosVigentes(token);
+        callLista.enqueue(new Callback<List<Contrato>>() {
             @Override
-            public void onResponse(Call<List<Inmueble>> call, Response<List<Inmueble>> response) {
-                inmuebles.setValue((ArrayList<Inmueble>) response.body());
-                Log.d("mensaje viewmodel", inmuebles.toString());
-            }
+            public void onResponse(Call<List<Contrato>> call, Response<List<Contrato>> response) {
+                if (response.isSuccessful()){
+                    Log.d("mensaje viewmodel", "llego devolucion de request");
+
+                    ArrayList<Contrato> list = (ArrayList) response.body();
+
+                    if (list.isEmpty()){
+                        Toast.makeText(context, "No hay Inquilinos para mostrar", Toast.LENGTH_SHORT).show();
+                    }
+                    inmuebles.postValue(list);
+                    Log.d("mensaje viewmodel", inmuebles.toString());
+                }
+             }
 
             @Override
-            public void onFailure(Call<List<Inmueble>> call, Throwable t) {
-
+            public void onFailure(Call<List<Contrato>> call, Throwable t) {
+                    Log.d("mensaje ", "Fallo en inquilino view model " + t.getMessage() );
             }
         });
 
@@ -64,16 +78,18 @@ public class InquilinoViewModel extends ViewModel {
 
         String token = traerToken();
 
-        Call<Inquilino> callInquilino = ApiClient.getMyApiClient().obtenerInquilino(token, inmueble);
-        callInquilino.enqueue(new Callback<Inquilino>() {
+        Call<Contrato> callInquilino = ApiClient.getMyApiClient("Inquilino VM").obtenerContratoVigente(token, inmueble);
+        callInquilino.enqueue(new Callback<Contrato>() {
             @Override
-            public void onResponse(Call<Inquilino> call, Response<Inquilino> response) {
-                inquilino.setValue(response.body());
-                Log.d("mensaje viewmodel", inquilino.toString());
+            public void onResponse(Call<Contrato> call, Response<Contrato> response) {
+                        if (response.isSuccessful()){
+                            inquilino.setValue(response.body());
+                            Log.d("mensaje viewmodel", inquilino.toString());
+                        }
             }
 
             @Override
-            public void onFailure(Call<Inquilino> call, Throwable t) {
+            public void onFailure(Call<Contrato> call, Throwable t) {
 
             }
         });
@@ -84,8 +100,8 @@ public class InquilinoViewModel extends ViewModel {
     }
 
     private String traerToken() {
-        SharedPreferences sp = context.getSharedPreferences("Usuario",0);
-        String token = sp.getString("token","sin token");
+
+        String token = ApiClient.leer(context, getClass().toString());
         return token;
     }
 

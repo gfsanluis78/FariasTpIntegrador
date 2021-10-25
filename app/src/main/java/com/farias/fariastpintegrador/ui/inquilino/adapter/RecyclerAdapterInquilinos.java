@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.farias.fariastpintegrador.R;
+import com.farias.fariastpintegrador.modelo.Contrato;
 import com.farias.fariastpintegrador.modelo.Inmueble;
 import com.farias.fariastpintegrador.modelo.Inquilino;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class RecyclerAdapterInquilinos extends RecyclerView.Adapter<RecyclerAdap
 
     // Declaraciones
     private Context context;
-    private ArrayList<Inmueble> lista;
+    private ArrayList<Contrato> lista;
     private Inquilino inquilino;
 
     // ######################################
@@ -58,7 +59,7 @@ public class RecyclerAdapterInquilinos extends RecyclerView.Adapter<RecyclerAdap
     //             Constructor
     // ####################################
     // Se inicializa la informacion del adapter
-    public RecyclerAdapterInquilinos(Context context, ArrayList<Inmueble> objetos) {
+    public RecyclerAdapterInquilinos(Context context, ArrayList<Contrato> objetos) {
         this.lista = objetos;
         this.context = context;
         this.inquilino = inquilino;
@@ -92,12 +93,12 @@ public class RecyclerAdapterInquilinos extends RecyclerView.Adapter<RecyclerAdap
 
         Log.d("mensaje", "En Inquilinos en la posicion " + position );
 
-        Inmueble inmueble = lista.get(position);
+        Contrato inmueble = lista.get(position);
 
-        holder.TV_Direccion.setText(inmueble.getDireccion());
-        holder.TV_Precio.setText("$ "+inmueble.getPrecio());
+        holder.TV_Direccion.setText(inmueble.getInmueble().getDireccion());
+        holder.TV_Precio.setText("$ "+inmueble.getMontoAlquiler()+ ".00");
         Glide.with(context)
-                .load(inmueble.getImagen())
+                .load(inmueble.getInmueble().getImagen())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)       // Llama la imagen remota y la carga en el cache,
                 .into(holder.IV_foto);                          // despues la busca de ahi y es mas rapido
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -105,8 +106,8 @@ public class RecyclerAdapterInquilinos extends RecyclerView.Adapter<RecyclerAdap
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();                                           // Instancio el bundle a enviar
-                bundle.putSerializable("inmueble", inmueble );                           // Meto la inmueble en el bundle
-                Log.d("mensajeViewHolder",inmueble.getDireccion());
+                bundle.putSerializable("inmueble", inmueble.getInmueble() );                           // Meto la inmueble en el bundle
+                Log.d("mensajeViewHolder",inmueble.getInmueble().getDireccion());
                 Navigation.findNavController(view).navigate(R.id.inquilinoDetalleFragment,bundle);       // Meto el bundle clave budle en el navigation
             }
         });

@@ -10,6 +10,10 @@ import androidx.lifecycle.ViewModel;
 import com.farias.fariastpintegrador.modelo.Contrato;
 import com.farias.fariastpintegrador.modelo.Inmueble;
 import com.farias.fariastpintegrador.request.ApiClient;
+import com.google.android.gms.common.api.Api;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,14 +33,18 @@ public class ContratoDetalleViewModel extends ViewModel {
     public void setContratoMutableLiveData(Bundle bundle) {
         Inmueble i = (Inmueble) bundle.getSerializable("inmueble");
 
-        SharedPreferences sp = context.getSharedPreferences("Usuario",0);
-        String token = sp.getString("token","sin token");
+        String token = ApiClient.leer(context, "Contrato detalle VM");
 
-        Call<Contrato> contratoCall = ApiClient.getMyApiClient().obtenerContratoVigente(token, i);
+        Call<Contrato> contratoCall = ApiClient.getMyApiClient("Contrato detalle VM").obtenerContratoVigente(token, i);
         contratoCall.enqueue(new Callback<Contrato>() {
             @Override
             public void onResponse(Call<Contrato> call, Response<Contrato> response) {
-                contratoMutableLiveData.setValue(response.body());
+                if(response.isSuccessful()){
+
+                    contratoMutableLiveData.setValue((Contrato)response.body());
+
+                }
+
             }
 
             @Override

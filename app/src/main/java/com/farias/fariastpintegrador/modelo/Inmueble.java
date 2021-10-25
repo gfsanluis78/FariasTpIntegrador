@@ -1,5 +1,7 @@
 package com.farias.fariastpintegrador.modelo;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -10,21 +12,21 @@ public class Inmueble implements Serializable {
     private String uso;
     private String tipo;
     private int ambientes;
-    private double precio;
-    private Propietario propietario;
+    private String montoAlquilerPropuesto;
+    private Propietario duenio;
     //En falso significa que el innmueble no está disponible por alguna falla en el mismo.
-    private boolean estado=true;
+    private boolean disponibilidad=true;
     private String imagen;
 
-    public Inmueble(int idInmueble, String direccion, String uso, String tipo, int ambientes, double precio, Propietario propietario, boolean estado, String imagen) {
+    public Inmueble(int idInmueble, String direccion, String uso, String tipo, int ambientes, String montoALquilerPropuesto, Propietario duenio, boolean disponibilidad, String imagen) {
         this.idInmueble = idInmueble;
         this.direccion = direccion;
         this.uso = uso;
         this.tipo = tipo;
         this.ambientes = ambientes;
-        this.precio = precio;
-        this.propietario = propietario;
-        this.estado = estado;
+        this.montoAlquilerPropuesto = montoAlquilerPropuesto;
+        this.duenio = duenio;
+        this.disponibilidad = disponibilidad;
         this.imagen = imagen;
     }
     public Inmueble() {
@@ -70,28 +72,28 @@ public class Inmueble implements Serializable {
         this.ambientes = ambientes;
     }
 
-    public double getPrecio() {
-        return precio;
+    public String getmontoAlquilerPropuesto() {
+        return montoAlquilerPropuesto;
     }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
+    public void setMontoALquilerPropuesto(String montoAlquilerPropuesto) {
+        this.montoAlquilerPropuesto = montoAlquilerPropuesto;
     }
 
     public Propietario getPropietario() {
-        return propietario;
+        return duenio;
     }
 
     public void setPropietario(Propietario propietario) {
-        this.propietario = propietario;
+        this.duenio = propietario;
     }
 
     public boolean isEstado() {
-        return estado;
+        return disponibilidad;
     }
 
     public void setEstado(boolean estado) {
-        this.estado = estado;
+        this.disponibilidad = estado;
     }
 
     public String getImagen() {
@@ -113,5 +115,14 @@ public class Inmueble implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(idInmueble);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Inmueble con id numero " + idInmueble +
+                " tipo " + tipo +
+                " con direccion en " + direccion
+                ;
     }
 }

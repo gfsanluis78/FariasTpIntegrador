@@ -99,7 +99,7 @@ public class RecyclerAdapterContratos extends RecyclerView.Adapter<RecyclerAdapt
         Inmueble inmueble = lista.get(position);
 
         holder.TV_Direccion.setText(inmueble.getDireccion());
-        holder.TV_Precio.setText("$ "+inmueble.getPrecio());
+        holder.TV_Precio.setText("$ "+inmueble.getmontoAlquilerPropuesto()+".00");
         Glide.with(context)
                 .load(inmueble.getImagen())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)       // Llama la imagen remota y la carga en el cache,

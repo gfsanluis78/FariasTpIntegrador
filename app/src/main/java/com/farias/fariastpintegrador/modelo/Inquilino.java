@@ -1,11 +1,13 @@
 package com.farias.fariastpintegrador.modelo;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class Inquilino implements Serializable {
 
     private int idInquilino;
-    private Long DNI;
+    private String dni;
     private String nombre;
     private String apellido;
     private String lugarDeTrabajo;
@@ -16,9 +18,9 @@ public class Inquilino implements Serializable {
 
     public Inquilino() {}
 
-    public Inquilino(int idInquilino, Long DNI, String nombre, String apellido, String lugarDeTrabajo, String email, String telefono, String nombreGarante, String telefonoGarante) {
+    public Inquilino(int idInquilino, String dni, String nombre, String apellido, String lugarDeTrabajo, String email, String telefono, String nombreGarante, String telefonoGarante) {
         this.idInquilino = idInquilino;
-        this.DNI = DNI;
+        this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
         this.lugarDeTrabajo = lugarDeTrabajo;
@@ -36,12 +38,12 @@ public class Inquilino implements Serializable {
         this.idInquilino = idInquilino;
     }
 
-    public Long getDNI() {
-        return DNI;
+    public String getDNI() {
+        return dni;
     }
 
-    public void setDNI(Long DNI) {
-        this.DNI = DNI;
+    public void setDNI(String dni) {
+        this.dni = dni;
     }
 
     public String getNombre() {
@@ -98,5 +100,18 @@ public class Inquilino implements Serializable {
 
     public void setTelefonoGarante(String telefonoGarante) {
         this.telefonoGarante = telefonoGarante;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+
+        return "Inquilino de Nombre: "+ nombre + " " + apellido +
+                " Idinquilino: " + idInquilino
+                ;
+    }
+
+    public String getNombreCompleto() {
+        return nombre + " " + apellido;
     }
 }

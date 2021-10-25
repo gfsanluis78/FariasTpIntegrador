@@ -1,9 +1,12 @@
 package com.farias.fariastpintegrador.ui.perfil;
 
+import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -15,7 +18,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PerfilViewModel extends ViewModel {
+public class PerfilViewModel extends AndroidViewModel {
 
     private MutableLiveData<String> mText;
 
@@ -25,22 +28,24 @@ public class PerfilViewModel extends ViewModel {
     private MutableLiveData<Integer> visibleGuardar;
     private MutableLiveData<Boolean> estadoEditable;
     private MutableLiveData<Boolean> estadoNoEditable;
+    private MutableLiveData<String> funcionBoton;
 
     private Context context;
 
-    public PerfilViewModel (){
+    public PerfilViewModel (@NonNull Application application ){
+        super(application);
+        context = application.getApplicationContext();
         usuario =  new MutableLiveData<>();
         visibleGuardar =  new MutableLiveData<>();
         estadoEditable =  new MutableLiveData<>();
         estadoNoEditable =  new MutableLiveData<>();
+        funcionBoton = new MutableLiveData<>();
     }
 
     public LiveData<Propietario> getUsuario() {
-
         if (usuario == null){
             usuario = new MutableLiveData<>();
         }
-
         return usuario;
     }
 
@@ -75,15 +80,21 @@ public class PerfilViewModel extends ViewModel {
         if(estadoNoEditable == null) {
             estadoNoEditable = new MutableLiveData<>();
         }
-
         return estadoNoEditable;
+    }
+
+    public MutableLiveData<String> getFuncionBoton() {
+        if(funcionBoton == null) {
+            funcionBoton = new MutableLiveData<>();
+        }
+        return   funcionBoton;
     }
 
     public void obtenerUsuario() {                  // metodo para recrear al inicio de la vista al usuario actual. Usa el mutable  usuario
 
         String token = elToken();
 
-        Call<Propietario> callActual = ApiClient.getMyApiClient().obtenerUsuarioActual(token);
+        Call<Propietario> callActual = ApiClient.getMyApiClient("Perfil VM").obtenerUsuarioActual(token);
         callActual.enqueue(new Callback<Propietario>() {
             @Override
             public void onResponse(Call<Propietario> call, Response<Propietario> response) {
@@ -92,7 +103,7 @@ public class PerfilViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<Propietario> call, Throwable t) {
-
+                Log.d("Mensaje:", "PerfilVM/obtenerUsuario: Fallo en buscar(" + t.getMessage() + ")");
             }
         });
 
@@ -100,18 +111,37 @@ public class PerfilViewModel extends ViewModel {
 
     public void modificarDatos(Propietario p){      // del lado de la activity saco los datos del propietario y los mando a este metodo
 
+        // Propietario miPropietario = new Propietario(){}; miPropietario = p;
+        p.setContraseña("");
+
+        Log.d("mensaje: ", "PerfilVM/modificarDato El propietario que llega es " + p.toString());
+
         String token = elToken();
 
-        Call<Propietario> callMod = ApiClient.getMyApiClient().actualizarPerfil(token, p);
+        Call<Propietario> callMod = ApiClient.getMyApiClient("Perfil VM").actualizarPerfil(token, p);
         callMod.enqueue(new Callback<Propietario>() {
             @Override
             public void onResponse(Call<Propietario> call, Response<Propietario> response) {
-                visibleGuardar.setValue((View.INVISIBLE));
-                PerfilViewModel.this.cambiarEstadoNoEditable();
+                if(response.isSuccessful()){
+
+                    visibleGuardar.setValue((View.INVISIBLE));
+
+                    funcionBoton.setValue("Editar");
+
+                    estadoEditable.setValue(false);
+
+                    Propietario prop = response.body();
+                    usuario.setValue(prop);
+                }
+                else {
+                    Log.d("mensaje: ", "@PerfilVM/modificarDatos Respuesta no Exitosa " + response.body());
+                }
+
             }
 
             @Override
             public void onFailure(Call<Propietario> call, Throwable t) {
+                Log.d("mensaje: ", "@PerfilVM/modificarDatos Fallo en traer nuevo propietario (" + t.getMessage() + ")" );
 
             }
         });
@@ -130,8 +160,7 @@ public class PerfilViewModel extends ViewModel {
     }
 
     private String elToken(){
-        SharedPreferences sp = context.getSharedPreferences("Usuario",0);
-        String token = sp.getString("token","sin token");
+        String token = ApiClient.leer(context, getClass().toString());
         return token;
     }
 

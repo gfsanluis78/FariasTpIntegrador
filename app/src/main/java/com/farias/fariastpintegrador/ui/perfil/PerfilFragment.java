@@ -2,15 +2,11 @@ package com.farias.fariastpintegrador.ui.perfil;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,22 +23,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.farias.fariastpintegrador.MainActivity;
 import com.farias.fariastpintegrador.MainActivityViewModel;
 import com.farias.fariastpintegrador.R;
-import com.farias.fariastpintegrador.data.LoginRepository;
 import com.farias.fariastpintegrador.data.model.LoggedInUser;
 import com.farias.fariastpintegrador.databinding.FragmentPerfilBinding;
 import com.farias.fariastpintegrador.modelo.Propietario;
-import com.farias.fariastpintegrador.ui.login.LoginActivity;
-import com.farias.fariastpintegrador.ui.login.LoginViewModel;
 
 public class PerfilFragment extends Fragment {
 
     private PerfilViewModel perfilViewModel;
 
     private LoggedInUser user;
-    private LoginRepository repository;
     Propietario p;
 
     private FragmentPerfilBinding binding;
@@ -67,19 +58,23 @@ public class PerfilFragment extends Fragment {
 
         perfilViewModel.getUsuario().observe(getViewLifecycleOwner(), propietario ->  {  // De mi nuevo perfilView uso el metodo getUsuario
             {
-                Log.i("mensaje", propietario.getNombre() );
-                modelActivity.actualizarPerfil(propietario);
-                p= propietario;
 
-                binding.TVTitulo.setText(propietario.getNombre() + " " + propietario.getApellido());
-                binding.ETId.setText(propietario.getId()+"");
-                binding.ETDni.setText(propietario.getDni().toString());
-                binding.ETNombre.setText(propietario.getNombre());
-                binding.ETApellido.setText(propietario.getApellido());
-                binding.ETEmail.setText(propietario.getEmail());
-                binding.ETPassword.setText(propietario.getContraseña());
-                binding.ETTelefono.setText(propietario.getTelefono());
-                binding.IVFoto.setImageResource(propietario.getAvatar());
+                if(propietario != null){
+                    Log.i("mensaje", propietario.getNombre() );
+                    modelActivity.actualizarPerfil(propietario);
+                    p= propietario;
+
+                    binding.TVTitulo.setText(propietario.getNombre() + " " + propietario.getApellido());
+                    binding.ETId.setText(propietario.getId()+"");
+                    binding.ETDni.setText(propietario.getDni().toString());
+                    binding.ETNombre.setText(propietario.getNombre());
+                    binding.ETApellido.setText(propietario.getApellido());
+                    binding.ETEmail.setText(propietario.getEmail());
+                    binding.ETPassword.setText(propietario.getContraseña());
+                    binding.ETTelefono.setText(propietario.getTelefono());
+                    binding.IVFoto.setImageResource(R.drawable.juan); // Todo: usar glide propietario.getAvatar()
+                }
+
             };
         });
 
@@ -91,7 +86,7 @@ public class PerfilFragment extends Fragment {
                 nombre.setEnabled((aBoolean));
                 apellido.setEnabled((aBoolean));
                 email.setEnabled((aBoolean));
-                clave.setEnabled((aBoolean));
+                clave.setEnabled((false));
                 telefono.setEnabled((aBoolean));
            }
         });
@@ -103,8 +98,17 @@ public class PerfilFragment extends Fragment {
                 nombre.setEnabled((aBoolean));
                 apellido.setEnabled((aBoolean));
                 email.setEnabled((aBoolean));
-                clave.setEnabled((aBoolean));
+                clave.setEnabled((false));
                 telefono.setEnabled((aBoolean));
+
+                editar.setText("Editar");
+                editar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        perfilViewModel.cambiarEstadoEditable();
+                    }
+                });
+
 
                 perfilViewModel.obtenerUsuario();
 
@@ -142,6 +146,22 @@ public class PerfilFragment extends Fragment {
                     }
                 });
             }
+        });
+
+        perfilViewModel.getFuncionBoton().observe(getViewLifecycleOwner(), funcion -> {
+            if( funcion == "Editar" ){
+
+                editar.setText("Editar");
+                editar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        perfilViewModel.cambiarEstadoEditable();
+                    }
+                });
+
+            }
+
+
         });
 
         perfilViewModel.getVisibleGuardar().observe(getViewLifecycleOwner(), new Observer<Integer>() {
@@ -183,7 +203,7 @@ public class PerfilFragment extends Fragment {
             public void onClick(View view) {
 
                 p.setId(Integer.parseInt(id.getText().toString()));
-                p.setDni(Long.parseLong(dni.getText().toString()));
+                p.setDni(dni.getText().toString());
                 p.setNombre(nombre.getText().toString());
                 p.setApellido(apellido.getText().toString());
                 p.setEmail(email.getText().toString());
@@ -191,15 +211,9 @@ public class PerfilFragment extends Fragment {
                 p.setTelefono(telefono.getText().toString());
 
                 perfilViewModel.modificarDatos(p);
-                perfilViewModel.obtenerUsuario();
+                //perfilViewModel.obtenerUsuario();
 
-                editar.setText("Editar");
-                editar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        perfilViewModel.cambiarEstadoEditable();
-                    }
-                });
+
 
                 // Posibilidad de salir al home una vez aplicados los cambios
                 // Navigation.findNavController(view).navigate(R.id.nav_home);

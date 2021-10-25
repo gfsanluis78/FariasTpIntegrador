@@ -20,11 +20,13 @@ import com.farias.fariastpintegrador.R;
 import com.farias.fariastpintegrador.databinding.FragmentContratoDetalleBinding;
 import com.farias.fariastpintegrador.modelo.Contrato;
 
+import java.util.Date;
+
 public class ContratoDetalleFragment extends Fragment {
 
     private ContratoDetalleViewModel model;
     private FragmentContratoDetalleBinding binding;
-    private Contrato contrato;
+    private Contrato elContrato;
 
     public static ContratoDetalleFragment newInstance() {
         return new ContratoDetalleFragment();
@@ -45,15 +47,17 @@ public class ContratoDetalleFragment extends Fragment {
             binding.ETIdContrato.setText(contrato.getIdContrato()+"");
             binding.ETFechaInicioContrato.setText(contrato.getFechaInicio());
             binding.ETFechaFinalizacionContrato.setText(contrato.getFechaFin());
-            binding.ETMontoAlquilerContrato.setText("$ " +contrato.getMontoAlquiler());
+            binding.ETMontoAlquilerContrato.setText("$ " +contrato.getMontoAlquiler()+".00");
             binding.ETInquilinoContrato.setText(contrato.getInquilino().getNombre() + " " + contrato.getInquilino().getApellido());
             binding.ETInmuebleContrato.setText(contrato.getInmueble().getTipo() + " en " + contrato.getInmueble().getDireccion());
 
+            elContrato = contrato;
             binding.BTContratosPagos.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Bundle result = new Bundle();
-                    result.putSerializable("elContrato", contrato);
+
+                    result.putSerializable("elContrato", elContrato);
 
                     Navigation.findNavController(view).navigate(R.id.pagoFragment, result);
                 }

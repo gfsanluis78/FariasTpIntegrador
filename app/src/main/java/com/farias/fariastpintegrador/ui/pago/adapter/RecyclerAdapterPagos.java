@@ -101,8 +101,8 @@ public class RecyclerAdapterPagos extends RecyclerView.Adapter<RecyclerAdapterPa
         Pago pago = lista.get(position);
         holder.numPago.setText("Pago numero "+pago.getNumero());
         holder.codigoPago.setText(pago.getIdPago()+"");
-        holder.codigoContrato.setText(pago.getContrato().getIdContrato()+"");
-        holder.importe.setText("$ " + pago.getImporte());
+        holder.codigoContrato.setText(pago.getIdContrato()+"");
+        holder.importe.setText("$ " + pago.getImporte()+".00");
         holder.fechaPago.setText(pago.getFechaDePago());
 
     }

@@ -1,5 +1,7 @@
 package  com.farias.fariastpintegrador.ui.login;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -58,22 +60,21 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        contextOfApplication = getApplicationContext();
-     binding = ActivityLoginBinding.inflate(getLayoutInflater());
-     setContentView(binding.getRoot());
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        final EditText usernameEditText = binding.username;
+        final EditText passwordEditText = binding.password;
+        final Button loginButton = binding.login;
+        final ProgressBar loadingProgressBar = binding.loading;
+
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M
                 && checkSelfPermission(android.Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED){
             requestPermissions(new String[]{Manifest.permission.CALL_PHONE},1000);
         }
 
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
-
-        final EditText usernameEditText = binding.username;
-        final EditText passwordEditText = binding.password;
-        final Button loginButton = binding.login;
-        final ProgressBar loadingProgressBar = binding.loading;
+        loginViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(LoginViewModel.class);
 
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -92,30 +93,8 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
             }
         });
 
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
-
-            @Override
-            public void onChanged(@Nullable LoginResult loginResult) {
-
-                if (loginResult == null) {
-                    return;
-                }
-                if (loginResult.getError() != null) {
-                    loadingProgressBar.setVisibility(View.INVISIBLE);
-                    showLoginFailed(loginResult.getError());
-                }
-                if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
-                }
-                setResult(Activity.RESULT_OK);
-
-                // para cerrar el teclado virtual
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(passwordEditText.getWindowToken(), 0);
 
 
-            }
-        });
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
@@ -142,26 +121,64 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString(), LoginActivity.getContextOfApplication());
+                            passwordEditText.getText().toString());
                 }
                 return false;
             }
+        });
+
+        loginViewModel.getSuceso().observe(this, elSuceso ->{
+            if(elSuceso == "Exito"){
+                Log.d("mensaje: " , "Login Exitoso");
+            } else
+            {
+                Log.d("mensaje: " , "Login Fallido");
+                loadingProgressBar.setVisibility( View.INVISIBLE);
+                passwordEditText.setText("");
+                usernameEditText.setText("");
+
+            }
+
         });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility( View.VISIBLE);
-                try {
-                    // TODO: Se agrega un sleep para simular la espera del request
-                    Thread.sleep(2000);
-                    Log.d("mensaje", "onClick: loading progress bar");
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString(),LoginActivity.getContextOfApplication());
+                loginViewModel.login(usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString());
 
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                // para cerrar el teclado virtual
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(passwordEditText.getWindowToken(), 0);
+
+                //loginViewModel.setPropietario();
+                loginViewModel.getPropietario().observe( LoginActivity.this, propietario -> {
+                    p = propietario;
+
+                    if (p != null){
+
+                        Intent  MainIntent = new Intent (LoginActivity.this, MainActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("propietario", p);
+                        MainIntent.putExtra("propietario", bundle);
+
+
+                        startActivity(MainIntent);
+
+                        String nombre = p.getNombre();
+
+                        // TODO: se personaliza el saludo de acuerdo a la termincion del nombre para Todas y todos :)
+                        char ultimo;
+                        ultimo = nombre.charAt(nombre.length()-1);
+
+                        Log.d("mensaje", "updateUiWithUser: " + ultimo);
+
+                        String welcome;
+                        welcome = Objects.equals(ultimo, 'a') ? "Bienvenida " +  p.getNombre() : "Bienvenido " +  p.getNombre() ;
+                        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+                    }
+                });
 
 
             }
@@ -180,35 +197,7 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
 
     }
 
-    private void updateUiWithUser(LoggedInUserView model) {
-        // initiate successful logged in experience
-        // inicie las actividad
 
-        loginViewModel.setPropietario(LoginActivity.getContextOfApplication());
-        loginViewModel.getPropietario().observe( LoginActivity.this, propietario -> {
-            p = propietario;
-        });
-
-        Intent  MainIntent = new Intent (LoginActivity.this, MainActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("propietario", p);
-        MainIntent.putExtra("propietario", bundle);
-
-
-        startActivity(MainIntent);
-
-        String nombre = p.getNombre();
-
-        // TODO: se personaliza el saludo de acuerdo a la termincion del nombre para Todas y todos :)
-        char ultimo;
-        ultimo = nombre.charAt(nombre.length()-1);
-
-        Log.d("mensaje", "updateUiWithUser: " + ultimo);
-
-        String welcome;
-        welcome = Objects.equals(ultimo, 'a') ? "Bienvenida " +  model.getDisplayName() : "Bienvenido " +  model.getDisplayName() ;
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
-    }
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
@@ -264,4 +253,14 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
     }
 
     public static Context getContextOfApplication(){ return contextOfApplication; }
+
+
+    private void inicializar(){
+
+    }
+
 }
+
+
+
+
