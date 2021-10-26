@@ -1,8 +1,10 @@
 package com.farias.fariastpintegrador.ui.contrato;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,8 +22,12 @@ import com.farias.fariastpintegrador.R;
 import com.farias.fariastpintegrador.databinding.FragmentContratoDetalleBinding;
 import com.farias.fariastpintegrador.modelo.Contrato;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class ContratoDetalleFragment extends Fragment {
 
     private ContratoDetalleViewModel model;
@@ -32,6 +38,7 @@ public class ContratoDetalleFragment extends Fragment {
         return new ContratoDetalleFragment();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -44,9 +51,14 @@ public class ContratoDetalleFragment extends Fragment {
         Log.d("mensaje", "El binding contrato trae ");
 
         model.getContratoMutableLiveData().observe(getViewLifecycleOwner(), contrato -> {
+
+
+
+
+
             binding.ETIdContrato.setText(contrato.getIdContrato()+"");
-            binding.ETFechaInicioContrato.setText(contrato.getFechaInicio());
-            binding.ETFechaFinalizacionContrato.setText(contrato.getFechaFin());
+            binding.ETFechaInicioContrato.setText(contrato.fechaInicioFormateada());
+            binding.ETFechaFinalizacionContrato.setText(contrato.fechaFinFormateada());
             binding.ETMontoAlquilerContrato.setText("$ " +contrato.getMontoAlquiler()+".00");
             binding.ETInquilinoContrato.setText(contrato.getInquilino().getNombre() + " " + contrato.getInquilino().getApellido());
             binding.ETInmuebleContrato.setText(contrato.getInmueble().getTipo() + " en " + contrato.getInmueble().getDireccion());
@@ -73,5 +85,6 @@ public class ContratoDetalleFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
     }
+
 
 }

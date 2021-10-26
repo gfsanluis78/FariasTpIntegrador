@@ -103,7 +103,7 @@ public class RecyclerAdapterPagos extends RecyclerView.Adapter<RecyclerAdapterPa
         holder.codigoPago.setText(pago.getIdPago()+"");
         holder.codigoContrato.setText(pago.getIdContrato()+"");
         holder.importe.setText("$ " + pago.getImporte()+".00");
-        holder.fechaPago.setText(pago.getFechaDePago());
+        holder.fechaPago.setText(pago.getFechaFormateada());
 
     }
 

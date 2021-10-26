@@ -122,6 +122,7 @@ public class InmuebleDetalleViewModel extends AndroidViewModel {
                 Inmueble inmuebleModificado = (Inmueble) response.body();
                 inmuebleViewModel.setValue(inmuebleModificado);
                 Log.d("mensaje", "Estado de disponibilidad actualizado");
+                Toast.makeText(context, "Se cambio la disponibilidad del inmueble", Toast.LENGTH_SHORT).show();
             }
 
             @Override

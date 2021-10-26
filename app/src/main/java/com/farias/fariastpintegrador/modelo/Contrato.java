@@ -1,8 +1,17 @@
 package com.farias.fariastpintegrador.modelo;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
+import com.google.type.DateTime;
+
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 public class Contrato implements Serializable {
@@ -154,4 +163,42 @@ public class Contrato implements Serializable {
                 " entre " + getInmueble().getPropietario().getNombreCompleto() + " y " +
                 getInquilino().getNombreCompleto();
     }
+
+    public String fechaInicioFormateada() {
+        String d = convertStringFecha(fechaInicio);
+        return d;
+    }
+
+    public String fechaFinFormateada() {
+        String d = convertStringFecha(fechaFin);
+        return d;
+    }
+
+
+
+    public String convertStringFecha(String fecha){
+        String dia="";
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+        SimpleDateFormat formateadoDia = new SimpleDateFormat("dd MMM yyyy");
+        try {
+            Date d = dateFormat.parse(fecha);
+            dia = formateadoDia.format(d);
+
+            Log.d("mensaje", "Fecha date "+ d);
+            Log.d("mensaje", "Fecha formateado " + dia);
+
+        } catch (
+                ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        return dia;
+    }
+
+
+
+
 }

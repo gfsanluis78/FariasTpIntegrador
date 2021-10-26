@@ -82,7 +82,6 @@ public class LoginViewModel extends AndroidViewModel {
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
 
-
         Call<LoginRetrofit> request = ApiClient.getMyApiClient("Login VM").login(username, password);
                 Log.d("mensaje", "Hizo el CALL desde LoginVM.login con " + username + " y " + password);
 
@@ -104,17 +103,13 @@ public class LoginViewModel extends AndroidViewModel {
                             suceso.postValue("Fallido");
                         }
                     }
-
                     @Override
                     public void onFailure(Call<LoginRetrofit> call, Throwable t) {
                         Toast.makeText(context, "Fallo en la comunicacion con la APi web", Toast.LENGTH_SHORT).show();
                         Log.d("mensaje: ", "Fallo en LoginVM/login"+t.getMessage());
                         suceso.postValue("Fallido");
-
                     }
                 });
-
-
     }
 
     public void loginDataChanged(String username, String password) {

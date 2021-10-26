@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -23,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.farias.fariastpintegrador.MainActivityViewModel;
 import com.farias.fariastpintegrador.R;
 import com.farias.fariastpintegrador.data.model.LoggedInUser;
@@ -50,7 +53,9 @@ public class PerfilFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         perfilViewModel =                                                                   // Instanciamos el viewModel
                 new ViewModelProvider(this).get(PerfilViewModel.class);
+
         MainActivityViewModel modelActivity = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
+
         binding = FragmentPerfilBinding.inflate(inflater, container, false);    // Instancio el binding del fragment
         View root = binding.getRoot();  // Del binding saco el root
 
@@ -72,7 +77,11 @@ public class PerfilFragment extends Fragment {
                     binding.ETEmail.setText(propietario.getEmail());
                     binding.ETPassword.setText(propietario.getContraseña());
                     binding.ETTelefono.setText(propietario.getTelefono());
-                    binding.IVFoto.setImageResource(R.drawable.juan); // Todo: usar glide propietario.getAvatar()
+                    //binding.IVFoto.setImageResource(R.drawable.juan); // Todo: usar glide propietario.getAvatar()
+                    Glide.with(getActivity().getApplicationContext())
+                            .load(propietario.getUrlFoto())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)       // Llama la imagen remota y la carga en el cache,
+                            .into(binding.IVFoto);                          // despues la busca de ahi y es mas rapido
                 }
 
             };

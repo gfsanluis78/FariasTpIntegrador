@@ -1,5 +1,7 @@
 package com.farias.fariastpintegrador.modelo;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
@@ -147,4 +149,14 @@ public class Propietario implements Serializable {
                 " avatarFile " + avatarFile +
                 " dni " + dni;
     }
+
+    public String getUrlFoto() {
+
+        String urlBase = "http://192.168.1.111:45455/";
+        String url = urlBase + avatar;
+        Log.d("mensaje: ", "La url de la foto del perfil " + url);
+
+        return url;
+    }
+
 }

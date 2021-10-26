@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.farias.fariastpintegrador.modelo.Propietario;
 import com.farias.fariastpintegrador.ui.perfil.PerfilViewModel;
 import com.google.android.material.snackbar.Snackbar;
@@ -79,7 +81,11 @@ public class MainActivity extends AppCompatActivity {
 
                     h_nombre.setText(propietario.getNombre() + " " + propietario.getApellido());
                     h_correo.setText(propietario.getEmail());
-                    h_avatar.setImageResource(R.drawable.juan); // TODO: usar glide
+                    //h_avatar.setImageResource(R.drawable.juan); // TODO: usar glide
+                    Glide.with(this.getApplicationContext())
+                            .load(propietario.getUrlFoto())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)       // Llama la imagen remota y la carga en el cache,
+                            .into(h_avatar);                          // despues la busca de ahi y es mas rapido
                 }
             }
         });

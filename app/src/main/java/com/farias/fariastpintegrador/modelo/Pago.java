@@ -1,6 +1,11 @@
 package com.farias.fariastpintegrador.modelo;
 
+import android.util.Log;
+
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Pago implements Serializable {
 
@@ -80,4 +85,32 @@ public class Pago implements Serializable {
     public void setIdContrato(int idContrato) {
         this.idContrato = idContrato;
     }
+
+    public String getFechaFormateada() {
+        String d = convertStringFecha(fecha);
+        return d;
+    }
+
+    public String convertStringFecha(String fecha){
+        String dia="";
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+        SimpleDateFormat formateadoDia = new SimpleDateFormat("dd MMM yyyy");
+        try {
+            Date d = dateFormat.parse(fecha);
+            dia = formateadoDia.format(d);
+
+            Log.d("mensaje", "Fecha date "+ d);
+            Log.d("mensaje", "Fecha formateado " + dia);
+
+        } catch (
+                ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        return dia;
+    }
+
 }
