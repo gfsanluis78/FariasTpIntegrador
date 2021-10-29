@@ -181,6 +181,10 @@ public class ApiClient {
         // actualizarInmueble(Inmueble inmueble)
         @PATCH("Inmuebles/CambioEstado")
         Call<Inmueble> actualizarInmueble(@Header("Authorization") String token, @Body Inmueble inmueble);
+
+        // crearInmueble(Inmueble inmueble)
+        @POST("Inmuebles")
+        Call<Inmueble> crearInmueble(@Header("Authorization") String token, @Body Inmueble inmueble);
     }
 
 }

@@ -83,5 +83,10 @@
             android:id="@+id/action_pagoFragment_to_contratoDetalleFragment"
             app:destination="@id/contratoDetalleFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_nuevo_inmueble"
+        android:name="com.farias.fariastpintegrador.ui.inmuebles.InmuebleCrearFragment"
+        android:label="Crear inmueble"
+        tools:layout="@layout/fragment_inmueble_crear" />
 
 </navigation>

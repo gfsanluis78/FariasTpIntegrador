@@ -94,11 +94,10 @@ public class RecyclerAdapterInquilinos extends RecyclerView.Adapter<RecyclerAdap
         Log.d("mensaje", "En Inquilinos en la posicion " + position );
 
         Contrato inmueble = lista.get(position);
-
         holder.TV_Direccion.setText(inmueble.getInmueble().getDireccion());
         holder.TV_Precio.setText("$ "+inmueble.getMontoAlquiler()+ ".00");
         Glide.with(context)
-                .load(inmueble.getInmueble().getImagen())
+                .load(inmueble.getInmueble().getUrlFoto())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)       // Llama la imagen remota y la carga en el cache,
                 .into(holder.IV_foto);                          // despues la busca de ahi y es mas rapido
         holder.itemView.setOnClickListener(new View.OnClickListener() {

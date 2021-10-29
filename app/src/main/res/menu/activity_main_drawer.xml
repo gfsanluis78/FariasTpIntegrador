@@ -3,32 +3,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/group1">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_lmenu_inicio_foreground"
             android:title="@string/menu_home" />
+
+    </group>
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/grup2">
+        <item
+            android:id="@+id/submenu"
+            android:title="Mis Inmuebles">
+            <menu>
+                <item
+                    android:id="@+id/nav_inmueble"
+                    android:icon="@drawable/ic_lmenu_inmuebles_foreground"
+                    android:title="@string/inmuebles" />
+                <item
+                    android:id="@+id/nav_nuevo_inmueble"
+                    android:icon="@drawable/ic_baseline_add_to_photos_24"
+                    android:title="@string/crear_inmueble" />
+            </menu>
+        </item>
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/item_2"
+            android:title="Mis Contratos">
+            <menu>
+                <item
+                    android:id="@+id/nav_contrato"
+                    android:icon="@drawable/ic_lmenu_contratos_foreground"
+                    android:title="@string/contratos" />
+                <item
+                    android:id="@+id/nav_inquilino"
+                    android:icon="@drawable/ic_lmenu_inquilinos_foreground"
+                    android:title="@string/inquilinos" />
+            </menu>
+        </item>
+    </group>
+
+    <group
+        android:id="@+id/perfil">
         <item
             android:id="@+id/nav_perfil"
             android:icon="@drawable/ic_lmenu_perfil_foreground"
             android:title="@string/perfil" />
         <item
-            android:id="@+id/nav_inmueble"
-            android:icon="@drawable/ic_lmenu_inmuebles_foreground"
-            android:title="@string/inmuebles" />
-        <item
-            android:id="@+id/nav_inquilino"
-            android:icon="@drawable/ic_lmenu_inquilinos_foreground"
-            android:title="@string/inquilinos" />
-        <item
-            android:id="@+id/nav_contrato"
-            android:icon="@drawable/ic_lmenu_contratos_foreground"
-            android:title="@string/contratos" />
-        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_lmenu_logout_foreground"
             android:title="@string/logout" />
-
-
     </group>
+
 </menu>

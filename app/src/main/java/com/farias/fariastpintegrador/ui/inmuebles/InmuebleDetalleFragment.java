@@ -63,12 +63,11 @@ public class InmuebleDetalleFragment extends Fragment {
                         }
                     });
                     Glide.with(getContext())
-                            .load(i.getImagen())
+                            .load(i.getUrlFoto())
                             .diskCacheStrategy(DiskCacheStrategy.ALL)               // Llama la imagen remota y la carga en el cache,
                             .into(binding.IVFotoDetalle);                          // despues la busca de ahi y es mas rapido
-
                 }
-                }
+            }
 
         });
 
@@ -78,9 +77,7 @@ public class InmuebleDetalleFragment extends Fragment {
 
                 Log.d("mensaje: InmDetalleVM", "El inmueble observado es " +i.toString());
                 mViewModel.setContrato(i);
-
             }
-
         });
 
         mViewModel.setInmueble(getArguments());

@@ -110,33 +110,33 @@ public class InmuebleDetalleViewModel extends AndroidViewModel {
 
     public void cambiarDisponiblidad(Inmueble i) {
 
-        Inmueble inmueble = new Inmueble(){};
-        inmueble.setIdInmueble(i.getIdInmueble());
-
         String token = traerToken();
 
-        Call<Inmueble> inmuebleCall = ApiClient.getMyApiClient("Inmueble detalle VM").actualizarInmueble(token,inmueble);
+        Call<Inmueble> inmuebleCall = ApiClient.getMyApiClient("Inmueble detalle VM").actualizarInmueble(token,i);
         inmuebleCall.enqueue(new Callback<Inmueble>() {
             @Override
             public void onResponse(Call<Inmueble> call, Response<Inmueble> response) {
-                Inmueble inmuebleModificado = (Inmueble) response.body();
-                inmuebleViewModel.setValue(inmuebleModificado);
-                Log.d("mensaje", "Estado de disponibilidad actualizado");
-                Toast.makeText(context, "Se cambio la disponibilidad del inmueble", Toast.LENGTH_SHORT).show();
+                if(response.isSuccessful()){
+                    Inmueble inmuebleModificado = (Inmueble) response.body();
+                    inmuebleViewModel.setValue(inmuebleModificado);
+                    Log.d("mensaje", "Estado de disponibilidad actualizado");
+                    Toast.makeText(context, "Se cambio la disponibilidad del inmueble", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Log.d("mensaje", "Fallo response no isSuccessful en @InmuebleDetalleViewModel.cambiarDisponibilidad");
+                }
             }
 
             @Override
             public void onFailure(Call<Inmueble> call, Throwable t) {
-
+                Log.d("mensaje: ", "Fallo en @InmuebleDetalleViewModel.cambiarDisponibilidad() / " + t.getMessage());
+                Toast.makeText(context, "Fallo en la comunicacion a la base de datos", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private String traerToken() {
-
         String token = ApiClient.leer(context, getClass().toString());
-
         return token;
     }
 

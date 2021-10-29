@@ -101,7 +101,7 @@ public class RecyclerAdapterContratos extends RecyclerView.Adapter<RecyclerAdapt
         holder.TV_Direccion.setText(inmueble.getDireccion());
         holder.TV_Precio.setText("$ "+inmueble.getmontoAlquilerPropuesto()+".00");
         Glide.with(context)
-                .load(inmueble.getImagen())
+                .load(inmueble.getUrlFoto())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)       // Llama la imagen remota y la carga en el cache,
                 .into(holder.IV_foto);                          // despues la busca de ahi y es mas rapido
         holder.itemView.setOnClickListener(new View.OnClickListener() {

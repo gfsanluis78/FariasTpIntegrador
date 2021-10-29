@@ -174,8 +174,6 @@ public class Contrato implements Serializable {
         return d;
     }
 
-
-
     public String convertStringFecha(String fecha){
         String dia="";
 
@@ -185,20 +183,14 @@ public class Contrato implements Serializable {
         try {
             Date d = dateFormat.parse(fecha);
             dia = formateadoDia.format(d);
-
-            Log.d("mensaje", "Fecha date "+ d);
-            Log.d("mensaje", "Fecha formateado " + dia);
+            Log.d("mensaje", "Recibida en string " + fecha);
+            Log.d("mensaje", "Fecha parseada de String a Date "+ d);
+            Log.d("mensaje", "Fecha formateada a mi patern habitual " + dia);
 
         } catch (
                 ParseException e) {
             e.printStackTrace();
         }
-
-
         return dia;
     }
-
-
-
-
 }

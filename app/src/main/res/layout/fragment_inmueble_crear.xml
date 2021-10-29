@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:background="@color/white">
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.inmuebles.InmuebleCrearFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/titulo_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nuevo inmueble"
+            android:textSize="20sp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/direccion_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Direccion"
+            android:paddingLeft="20dp"
+            android:textSize="15sp"/>
+
+        <EditText
+            android:id="@+id/ET_direccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingBottom="10dp"
+            android:textSize="15sp"
+            android:inputType="textPersonName"
+            android:hint="Direccion:"
+            android:textStyle="bold"
+            android:padding="20dip"/>
+        <TextView
+            android:id="@+id/uso_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Uso:"
+            android:paddingLeft="20dp"
+            android:textSize="15sp"/>
+
+        <EditText
+            android:id="@+id/ET_uso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingBottom="10dp"
+            android:textSize="15sp"
+            android:inputType="textPersonName"
+            android:hint="Uso"
+            android:textStyle="bold"
+            android:padding="20dip"/>
+        <TextView
+            android:id="@+id/tipo_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tipo:"
+            android:paddingLeft="20dp"
+            android:textSize="15sp"/>
+
+        <EditText
+            android:id="@+id/ET_tipo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingBottom="10dp"
+            android:textSize="15sp"
+            android:inputType="textPersonName"
+            android:hint="Tipo"
+            android:textStyle="bold"
+            android:padding="20dip"/>
+        <TextView
+            android:id="@+id/ambientes_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ambientes:"
+            android:paddingLeft="20dp"
+            android:textSize="15sp"/>
+
+        <EditText
+            android:id="@+id/ET_ambientes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingBottom="10dp"
+            android:textSize="15sp"
+            android:inputType="textPersonName"
+            android:hint="Ambientes"
+            android:textStyle="bold"
+            android:padding="20dip"/>
+        <TextView
+            android:id="@+id/alqulier_propuesto_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Monto de alquiler:"
+            android:paddingLeft="20dp"
+            android:textSize="15sp"/>
+
+        <EditText
+            android:id="@+id/ET_alquiler_propuesto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingBottom="10dp"
+            android:textSize="15sp"
+            android:inputType="textPersonName"
+            android:hint="Monto del alquiler propuesto"
+            android:textStyle="bold"
+            android:padding="20dip"/>
+        <TextView
+            android:id="@+id/foto_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Foto:"
+            android:paddingLeft="20dp"
+            android:textSize="15sp"/>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="195dp"
+            android:layout_marginTop="20dp"
+            tools:src="@tools:sample/avatars"
+
+            />
+
+        <Button
+            android:id="@+id/BT_tomar_foto"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp"
+            android:layout_span="2"
+            android:text="Subir foto"
+            android:onClick="tomarFoto"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/BT_guardar_inmueble"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_height="70dp"
+            android:text="Guardar inmueble"
+            android:textSize="20sp"
+            android:layout_span="2">
+        </Button>
+        />
+
+    </LinearLayout>
+</FrameLayout>
+</ScrollView>
