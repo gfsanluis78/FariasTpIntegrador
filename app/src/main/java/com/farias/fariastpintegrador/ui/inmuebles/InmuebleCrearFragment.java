@@ -88,11 +88,6 @@ public class InmuebleCrearFragment extends Fragment {
         mViewModel.guardarInmueble(inmueble);
     }
 
-    public void tomarFoto(View v){
-        Log.d("mensaje: ", "Click en tomar foto");
-        }
-
-
     public void iniciarVista(){
 
         mViewModel= new ViewModelProvider(this).get(InmuebleCrearViewModel.class);

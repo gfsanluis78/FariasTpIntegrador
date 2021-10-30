@@ -253,7 +253,8 @@
                 android:layout_height="70dp"
                 android:text="Cambiar disponibilidad"
                 android:textSize="20sp"
-                android:layout_span="2">
+                android:layout_span="2"
+                android:visibility="invisible">
 
             </Button>
 
@@ -266,7 +267,6 @@
         android:layout_width="400dp"
         android:layout_height="400dp"
         android:layout_marginBottom="10dp"
-        android:src="@drawable/ic_launcher"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

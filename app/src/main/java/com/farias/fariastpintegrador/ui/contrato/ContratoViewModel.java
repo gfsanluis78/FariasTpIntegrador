@@ -4,12 +4,14 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.farias.fariastpintegrador.modelo.Contrato;
 import com.farias.fariastpintegrador.modelo.Inmueble;
 import com.farias.fariastpintegrador.modelo.Inquilino;
 import com.farias.fariastpintegrador.request.ApiClient;
@@ -56,7 +58,12 @@ public class ContratoViewModel extends AndroidViewModel {
         callPropALquiladas.enqueue(new Callback<List<Inmueble>>() {
             @Override
             public void onResponse(Call<List<Inmueble>> call, Response<List<Inmueble>> response) {
-                inmuebles.setValue((ArrayList<Inmueble>) response.body());
+                ArrayList<Inmueble> list = (ArrayList) response.body();
+
+                if (list.isEmpty()){
+                    Toast.makeText(context, "No hay Contratos para mostrar", Toast.LENGTH_SHORT).show();
+                }
+                inmuebles.setValue(list);
                 Log.d("mensaje viewmodel", inmuebles.toString());
             }
 
